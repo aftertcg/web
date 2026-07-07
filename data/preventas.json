@@ -1,0 +1,37 @@
+[
+  {
+    "name": "Caja Booster TCG - Nueva expansión",
+    "estimatedDate": "Llegada estimada: 20/08",
+    "status": "Próximamente",
+    "type": "Display sellado",
+    "alt": "Caja booster ficticia con estética negra y dorada"
+  },
+  {
+    "name": "Elite Trainer Box",
+    "estimatedDate": "Llegada estimada: 27/08",
+    "status": "Próximamente",
+    "type": "Caja premium",
+    "alt": "Caja premium coleccionable ficticia"
+  },
+  {
+    "name": "Bundle de lanzamiento",
+    "estimatedDate": "Llegada estimada: 04/09",
+    "status": "Próximamente",
+    "type": "Pack inicial",
+    "alt": "Bundle ficticio de lanzamiento TCG"
+  },
+  {
+    "name": "Sleeves premium",
+    "estimatedDate": "Llegada estimada: 11/09",
+    "status": "Próximamente",
+    "type": "Accesorios",
+    "alt": "Sleeves premium para cartas"
+  },
+  {
+    "name": "Carpeta coleccionista",
+    "estimatedDate": "Llegada estimada: 18/09",
+    "status": "Próximamente",
+    "type": "Binder",
+    "alt": "Carpeta coleccionista premium"
+  }
+]

@@ -1,0 +1,20 @@
+{
+  "season": "Ranking Temporada Inicial",
+  "players": [
+    { "position": 1, "name": "Nico R.", "points": 18, "participations": 3, "lastResult": "Top 1" },
+    { "position": 2, "name": "Mati G.", "points": 15, "participations": 3, "lastResult": "Top 2" },
+    { "position": 3, "name": "Agus T.", "points": 12, "participations": 2, "lastResult": "Top 4" },
+    { "position": 4, "name": "Leo P.", "points": 10, "participations": 2, "lastResult": "Win" },
+    { "position": 5, "name": "Fede C.", "points": 8, "participations": 1, "lastResult": "Top 8" }
+  ],
+  "featured": {
+    "name": "Nico R.",
+    "description": "Líder actual de la temporada inicial. Buen manejo de mesa, constancia y partidas muy prolijas.",
+    "stats": [
+      { "label": "Torneos jugados", "value": "3" },
+      { "label": "Puntos", "value": "18" },
+      { "label": "Top 4", "value": "2" },
+      { "label": "Winrate", "value": "67%" }
+    ]
+  }
+}

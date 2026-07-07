@@ -1,0 +1,30 @@
+[
+  {
+    "date": "01/08/2026",
+    "category": "Eventos",
+    "title": "Abrimos agenda de torneos de agosto",
+    "summary": "Ya podés consultar fechas, formatos y cupos de la primera tanda de torneos de la temporada.",
+    "alt": "Agenda de eventos en el local"
+  },
+  {
+    "date": "28/07/2026",
+    "category": "Preventas",
+    "title": "Nueva tanda de preventas disponible",
+    "summary": "Sumamos cajas, bundles, sleeves y accesorios para reservar por WhatsApp sin compra online.",
+    "alt": "Productos ficticios de preventa"
+  },
+  {
+    "date": "24/07/2026",
+    "category": "Comunidad",
+    "title": "Sumamos noches de Nintendo Switch",
+    "summary": "Viernes con Mario Kart, Smash y consola libre para venir con amigos o conocer gente nueva.",
+    "alt": "Consola Nintendo Switch en una mesa"
+  },
+  {
+    "date": "18/07/2026",
+    "category": "Guías",
+    "title": "Guía para nuevos jugadores TCG",
+    "summary": "Una intro simple para saber qué traer, cómo anotarte y cómo funcionan las mesas casuales.",
+    "alt": "Mesa de cartas para nuevos jugadores"
+  }
+]

@@ -1,0 +1,29 @@
+{
+  "storeName": "After TCG",
+  "tagline": "Cartas, torneos, Switch y comunidad",
+  "whatsapp": "5491178289401",
+  "instagram": "aftertcg",
+  "address": "Almagro, CABA",
+  "hours": [
+    { "day": "Jueves", "time": "17:00 a 21:00" },
+    { "day": "Viernes", "time": "17:00 a 22:00" },
+    { "day": "Sábados", "time": "14:00 a 22:00" }
+  ],
+  "heroChips": [
+    { "icon": "TCG", "title": "Mesas libres", "text": "Casual y práctica toda la tarde" },
+    { "icon": "SW", "title": "Noche de Switch", "text": "Mario Kart, Smash y rotación libre" },
+    { "icon": "SN", "title": "Panchitos + Coca", "text": "Combo rápido para seguir jugando" },
+    { "icon": "PRE", "title": "Preventa abierta", "text": "Reservas por WhatsApp" }
+  ],
+  "todayStrip": [
+    { "icon": "EV", "title": "Torneos semanales", "text": "TCG, casuales y competitivos" },
+    { "icon": "CM", "title": "Comunidad", "text": "Conocé gente y armá mesa" },
+    { "icon": "NS", "title": "Juegos de Switch", "text": "Venite a jugar con amigos" },
+    { "icon": "SB", "title": "Snacks & bebidas", "text": "Panchitos, gaseosas y más" }
+  ],
+  "weeklySchedule": [
+    { "day": "Jueves", "title": "Torneo nocturno", "description": "Formato competitivo con cupos por inscripción." },
+    { "day": "Viernes", "title": "Noche gamer + snacks", "description": "Mesas extendidas, combos y consola hasta el cierre." },
+    { "day": "Sábado", "title": "Liga / torneo principal", "description": "Evento fuerte de la semana, ranking y premios." }
+  ]
+}

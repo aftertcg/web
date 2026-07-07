@@ -1,0 +1,8 @@
+[
+  { "name": "Cartas TCG", "alt": "Cartas coleccionables ficticias" },
+  { "name": "Accesorios", "alt": "Cajas, sleeves y carpetas" },
+  { "name": "Figuras y coleccionables", "alt": "Figuras coleccionables sin marcas oficiales" },
+  { "name": "Gaming y consolas", "alt": "Consola de videojuegos en mesa" },
+  { "name": "Snacks y bebidas", "alt": "Bebidas frías y snacks" },
+  { "name": "Merch premium", "alt": "Merchandising coleccionable" }
+]
