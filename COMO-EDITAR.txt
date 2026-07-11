@@ -1,0 +1,22 @@
+AFTER TCG — EDICIÓN RÁPIDA
+
+EVENTOS:
+EDITAR-ACA/eventos.js
+
+DATOS DEL LOCAL:
+EDITAR-ACA/config.js
+
+RANKING Y NOVEDADES:
+EDITAR-ACA/comunidad.js
+
+CAMBIAR CUPOS:
+Modificar el número de "reservados".
+
+CAMBIAR IMAGEN:
+Subir la imagen a assets/eventos y cambiar la ruta en eventos.js.
+
+VISTA PREVIA:
+Abrir index.html desde el celular.
+
+EDITOR BÁSICO:
+Abrir editar-eventos.html.

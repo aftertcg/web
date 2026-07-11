@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#080a0f">
+  <meta name="description" content="After TCG: eventos TCG, noches de Switch, comunidad, snacks y reservas en Almagro, CABA.">
+  <meta property="og:title" content="After TCG">
+  <meta property="og:description" content="Cartas, torneos, Switch y comunidad. Reservá tu lugar.">
+  <meta property="og:image" content="assets/eventos/torneo-standard.jpg">
+  <title>After TCG</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="assets/branding/icon-192.png">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <img src="assets/branding/logo.png" alt="After TCG" class="logo">
+      <div class="topbar-status"><span class="status-dot"></span> Eventos con reserva</div>
+    </header>
+    <main id="app" class="app-main" aria-live="polite"></main>
+    <nav class="bottom-nav" aria-label="Navegación principal">
+      <button class="nav-btn is-active" data-route="inicio"><img src="assets/icons/home.svg" alt=""><span>Inicio</span></button>
+      <button class="nav-btn" data-route="eventos"><img src="assets/icons/events.svg" alt=""><span>Eventos</span></button>
+      <button class="nav-btn" data-route="calendario"><img src="assets/icons/calendar.svg" alt=""><span>Calendario</span></button>
+      <button class="nav-btn" data-route="comunidad"><img src="assets/icons/community.svg" alt=""><span>Comunidad</span></button>
+      <button class="nav-btn" data-route="contacto"><img src="assets/icons/contact.svg" alt=""><span>Contacto</span></button>
+    </nav>
+  </div>
+  <dialog id="event-modal" class="event-modal"><button class="modal-close" aria-label="Cerrar">×</button><div id="modal-content"></div></dialog>
+  <script src="EDITAR-ACA/config.js"></script>
+  <script src="EDITAR-ACA/eventos.js"></script>
+  <script src="EDITAR-ACA/comunidad.js"></script>
+  <script src="js/core/utils.js"></script>
+  <script src="js/core/components.js"></script>
+  <script src="js/core/router.js"></script>
+  <script src="js/modules/inicio.js"></script>
+  <script src="js/modules/eventos.js"></script>
+  <script src="js/modules/calendario.js"></script>
+  <script src="js/modules/comunidad.js"></script>
+  <script src="js/modules/contacto.js"></script>
+  <script src="js/core/app.js"></script>
+</body>
+</html>
