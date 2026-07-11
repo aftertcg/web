@@ -1,15 +1,22 @@
 window.AfterModules = window.AfterModules || {};
 
 window.AfterModules.inicio = (() => {
+  let slideActual = 0;
+  let timer = null;
+  let touchInicio = 0;
+  let touchFin = 0;
+
   function cleanup() {
-    // Se conserva para que el router pueda limpiar el módulo.
+    if (timer) {
+      clearInterval(timer);
+      timer = null;
+    }
   }
 
-  function getLocalStatus(nextEvent) {
-    const eventos = window.AFTER_EVENTOS;
+  function obtenerEstadoLocal(proximoEvento) {
     const ahora = new Date();
 
-    const eventoActivo = eventos.find(evento => {
+    const eventoActivo = window.AFTER_EVENTOS.find(evento => {
       const inicio = new Date(
         `${evento.fecha}T${evento.hora}:00`
       );
@@ -27,238 +34,417 @@ window.AfterModules.inicio = (() => {
 
     if (eventoActivo) {
       return {
-        abierto: true,
+        clase: "is-open",
         titulo: "Abierto ahora",
         detalle: eventoActivo.titulo
       };
     }
 
     return {
-      abierto: false,
+      clase: "is-next",
       titulo: "Próxima actividad",
-      detalle: nextEvent
-        ? `${window.AfterUtils.shortDate(nextEvent.fecha)} · ${nextEvent.hora}`
+      detalle: proximoEvento
+        ? `${window.AfterUtils.shortDate(proximoEvento.fecha)} · ${proximoEvento.hora}`
         : "Próximamente"
     };
   }
 
+  function crearSlides(proximoEvento) {
+    const U = window.AfterUtils;
+
+    return [
+      {
+        tipo: "presentacion",
+        imagen: "assets/local/local-base.jpg",
+        etiqueta: "After TCG · Almagro",
+        titulo: "Jugá. Compartí. Viví el hobby.",
+        texto:
+          "TCG, Nintendo Switch, comida y comunidad en un mismo espacio.",
+        boton: "Ver próximos eventos",
+        ruta: "eventos"
+      },
+
+      {
+        tipo: "evento",
+        imagen: proximoEvento
+          ? proximoEvento.imagen
+          : "assets/eventos/torneo-standard.jpg",
+        etiqueta: "Próximo evento",
+        titulo: proximoEvento
+          ? proximoEvento.titulo
+          : "Próximamente",
+        texto: proximoEvento
+          ? `${U.shortDate(proximoEvento.fecha)} · ${proximoEvento.hora} · ${U.availability(proximoEvento)}`
+          : "Muy pronto publicaremos una nueva actividad.",
+        boton: proximoEvento && U.remaining(proximoEvento) > 0
+          ? "Reservar lugar"
+          : "Ver agenda",
+        evento: proximoEvento ? proximoEvento.id : null,
+        reservar:
+          Boolean(
+            proximoEvento &&
+            U.remaining(proximoEvento) > 0
+          )
+      },
+
+      {
+        tipo: "comunidad",
+        imagen: "assets/eventos/encuentro-comunidad.jpg",
+        etiqueta: "Más que una tienda",
+        titulo: "Un lugar para conocer gente.",
+        texto:
+          "Jugá, competí, intercambiá y compartí el hobby con la comunidad.",
+        boton: "Conocer la comunidad",
+        ruta: "comunidad"
+      }
+    ];
+  }
+
+  function actualizarCarrusel(indice) {
+    const track =
+      document.getElementById("home-carousel-track");
+
+    const slides = document.querySelectorAll(
+      ".home-carousel-slide"
+    );
+
+    if (!track || !slides.length) return;
+
+    slideActual =
+      (indice + slides.length) % slides.length;
+
+    track.style.transform =
+      `translateX(-${slideActual * 100}%)`;
+
+    document
+      .querySelectorAll(".home-carousel-dot")
+      .forEach((dot, index) => {
+        dot.classList.toggle(
+          "active",
+          index === slideActual
+        );
+      });
+  }
+
+  function iniciarAutomatico() {
+    cleanup();
+
+    timer = setInterval(() => {
+      if (location.hash !== "#inicio") {
+        cleanup();
+        return;
+      }
+
+      actualizarCarrusel(slideActual + 1);
+    }, 6500);
+  }
+
   function render() {
-    const C = window.AFTER_CONFIG;
+    cleanup();
+
     const U = window.AfterUtils;
     const proximos = U.upcoming();
-    const next = proximos[0] || null;
-    const status = getLocalStatus(next);
+    const proximoEvento = proximos[0] || null;
+    const estado = obtenerEstadoLocal(proximoEvento);
+    const slides = crearSlides(proximoEvento);
 
     document.getElementById("app").innerHTML = `
-      <section class="home-v3">
+      <section class="home-final">
 
-        <article class="home-v3-hero">
+        <div class="home-final-top">
 
-          <img
-            src="assets/local/local-base.jpg"
-            alt="After TCG, espacio de juegos y eventos en Almagro"
-            class="home-v3-background"
+          <span class="home-final-location">
+            📍 Almagro, CABA
+          </span>
+
+          <div class="home-final-status ${estado.clase}">
+            <span class="home-final-status-dot"></span>
+
+            <div>
+              <strong>${estado.titulo}</strong>
+              <small>${estado.detalle}</small>
+            </div>
+          </div>
+
+        </div>
+
+
+        <article
+          class="home-carousel"
+          id="home-carousel"
+        >
+
+          <div
+            class="home-carousel-track"
+            id="home-carousel-track"
           >
 
-          <div class="home-v3-overlay"></div>
-          <div class="home-v3-glow"></div>
+            ${slides.map((slide, index) => `
+              <article class="home-carousel-slide">
 
-          <div class="home-v3-top">
+                <img
+                  src="${slide.imagen}"
+                  alt="${slide.titulo}"
+                  class="home-carousel-image"
+                >
 
-            <span class="home-v3-location">
-              📍 Almagro, CABA
-            </span>
+                <div class="home-carousel-shade"></div>
 
-            <div class="home-v3-status ${status.abierto ? "is-open" : "is-next"}">
-              <span class="home-v3-status-dot"></span>
+                <div class="home-carousel-content">
 
-              <div>
-                <strong>${status.titulo}</strong>
-                <small>${status.detalle}</small>
-              </div>
-            </div>
+                  <div class="kicker">
+                    ${slide.etiqueta}
+                  </div>
+
+                  <h1>${slide.titulo}</h1>
+
+                  <p>${slide.texto}</p>
+
+                  ${
+                    slide.reservar
+                      ? `
+                        <button
+                          class="btn btn-primary js-reserve"
+                          data-event="${slide.evento}"
+                        >
+                          ${slide.boton}
+                        </button>
+                      `
+                      : slide.evento
+                        ? `
+                          <button
+                            class="btn btn-primary js-detail"
+                            data-event="${slide.evento}"
+                          >
+                            ${slide.boton}
+                          </button>
+                        `
+                        : `
+                          <button
+                            class="btn btn-primary js-go"
+                            data-route="${slide.ruta}"
+                          >
+                            ${slide.boton}
+                          </button>
+                        `
+                  }
+
+                </div>
+
+              </article>
+            `).join("")}
 
           </div>
 
-          <div class="home-v3-content">
 
-            <div class="kicker">
-              Bienvenido a After TCG
-            </div>
+          <button
+            class="home-carousel-arrow home-carousel-prev"
+            id="home-carousel-prev"
+            aria-label="Banner anterior"
+          >
+            ‹
+          </button>
 
-            <h1>
-              Jugá.<br>
-              Compartí.<br>
-              Viví el hobby.
-            </h1>
+          <button
+            class="home-carousel-arrow home-carousel-next"
+            id="home-carousel-next"
+            aria-label="Siguiente banner"
+          >
+            ›
+          </button>
 
-            <p>
-              Eventos TCG, Nintendo Switch, comunidad,
-              comida y buenos momentos.
-            </p>
 
-            <div class="home-v3-tags">
-              <span>🎴 TCG</span>
-              <span>🎮 Switch</span>
-              <span>🏆 Torneos</span>
-              <span>🌭 Snacks</span>
-            </div>
+          <div class="home-carousel-dots">
+
+            ${slides.map((_, index) => `
+              <button
+                class="
+                  home-carousel-dot
+                  ${index === 0 ? "active" : ""}
+                "
+                data-carousel-dot="${index}"
+                aria-label="Mostrar banner ${index + 1}"
+              ></button>
+            `).join("")}
 
           </div>
-
-          ${
-            next
-              ? `
-                <article class="home-v3-next-event">
-
-                  <button
-                    class="home-v3-next-main js-detail"
-                    data-event="${next.id}"
-                  >
-                    <div class="home-v3-next-date">
-                      <small>
-                        ${U.shortDate(next.fecha)}
-                      </small>
-
-                      <strong>${next.hora}</strong>
-                    </div>
-
-                    <div class="home-v3-next-info">
-                      <span>Próximo evento</span>
-                      <strong>${next.titulo}</strong>
-
-                      <small class="${U.availabilityClass(next)}">
-                        ${U.availability(next)}
-                      </small>
-                    </div>
-
-                    <div class="home-v3-next-arrow">
-                      ›
-                    </div>
-                  </button>
-
-                  <button
-                    class="home-v3-reserve js-reserve"
-                    data-event="${next.id}"
-                    ${U.remaining(next) === 0 ? "disabled" : ""}
-                  >
-                    ${
-                      U.remaining(next) === 0
-                        ? "Completo"
-                        : "Reservar lugar"
-                    }
-                  </button>
-
-                </article>
-              `
-              : ""
-          }
 
         </article>
 
 
-        <div class="home-v3-explore">
+        <div class="home-final-heading">
 
-          <div class="home-v3-explore-heading">
-            <div>
-              <div class="kicker">
-                Explorá After
-              </div>
-
-              <h2>¿Qué querés ver?</h2>
+          <div>
+            <div class="kicker">
+              Explorá After
             </div>
 
-            <span>Elegí una sección</span>
+            <h2>¿Qué querés ver?</h2>
           </div>
 
-          <div class="home-v3-news-access">
-
-            <button
-              class="home-v3-news-card js-go"
-              data-route="noticias"
-            >
-              <span class="home-v3-news-icon">🗞️</span>
-
-              <div>
-                <div class="kicker">Lo último en After</div>
-                <strong>Noticias y novedades</strong>
-                <small>
-                  Preventas, productos, anuncios y nuevas actividades.
-              
-</small>
-              </div>
-
-              <b>›</b>
-            </button>
-
-          </div>
-
-          <div class="home-v3-nav-grid">
-
-            <button
-              class="home-v3-nav-card home-v3-events js-go"
-              data-route="eventos"
-            >
-              <span class="home-v3-nav-icon">🎟️</span>
-
-              <div>
-                <strong>Eventos</strong>
-                <small>Reservá tu lugar</small>
-              </div>
-
-              <b>›</b>
-            </button>
-
-            <button
-              class="home-v3-nav-card home-v3-calendar js-go"
-              data-route="calendario"
-            >
-              <span class="home-v3-nav-icon">📅</span>
-
-              <div>
-                <strong>Eventos</strong>
-                <small>Fechas, cupos y calendario</small>
-              </div>
-
-              <b>›</b>
-            </button>
-
-            <button
-              class="home-v3-nav-card home-v3-community js-go"
-              data-route="comunidad"
-            >
-              <span class="home-v3-nav-icon">🏆</span>
-
-              <div>
-                <strong>Comunidad</strong>
-                <small>Rankings y momentos</small>
-              </div>
-
-              <b>›</b>
-            </button>
-
-            <button
-              class="home-v3-nav-card home-v3-visit js-go"
-              data-route="contacto"
-            >
-              <span class="home-v3-nav-icon">📍</span>
-
-              <div>
-                <strong>Visítanos</strong>
-                <small>Conocé el local</small>
-              </div>
-
-              <b>›</b>
-            </button>
-
-          </div>
+          <span>
+            Tocá una sección
+          </span>
 
         </div>
+
+
+        <div class="home-final-nav-grid">
+
+          <button
+            class="home-final-nav-card home-final-news js-go"
+            data-route="noticias"
+          >
+            <span>🗞️</span>
+
+            <div>
+              <strong>Noticias</strong>
+              <small>
+                Preventas y novedades
+              </small>
+            </div>
+
+            <b>›</b>
+          </button>
+
+
+          <button
+            class="home-final-nav-card home-final-events js-go"
+            data-route="eventos"
+          >
+            <span>📅</span>
+
+            <div>
+              <strong>Eventos</strong>
+              <small>
+                Fechas, cupos y reservas
+              </small>
+            </div>
+
+            <b>›</b>
+          </button>
+
+
+          <button
+            class="home-final-nav-card home-final-community js-go"
+            data-route="comunidad"
+          >
+            <span>🏆</span>
+
+            <div>
+              <strong>Comunidad</strong>
+              <small>
+                Rankings y resultados
+              </small>
+            </div>
+
+            <b>›</b>
+          </button>
+
+
+          <button
+            class="home-final-nav-card home-final-visit js-go"
+            data-route="contacto"
+          >
+            <span>📍</span>
+
+            <div>
+              <strong>Visítanos</strong>
+              <small>
+                Local y cómo llegar
+              </small>
+            </div>
+
+            <b>›</b>
+          </button>
+
+        </div>
+
+
+        <article class="home-final-manifesto">
+
+          <span>🎴</span>
+
+          <div>
+            <strong>
+              Cada fecha es una experiencia diferente.
+            </strong>
+
+            <p>
+              Torneos, encuentros casuales, Switch,
+              intercambios y actividades especiales.
+            </p>
+          </div>
+
+        </article>
 
       </section>
     `;
 
     window.AfterApp.bindCommon();
+
+    document
+      .getElementById("home-carousel-prev")
+      .onclick = () => {
+        actualizarCarrusel(slideActual - 1);
+        iniciarAutomatico();
+      };
+
+    document
+      .getElementById("home-carousel-next")
+      .onclick = () => {
+        actualizarCarrusel(slideActual + 1);
+        iniciarAutomatico();
+      };
+
+    document
+      .querySelectorAll("[data-carousel-dot]")
+      .forEach(dot => {
+        dot.onclick = () => {
+          actualizarCarrusel(
+            Number(dot.dataset.carouselDot)
+          );
+
+          iniciarAutomatico();
+        };
+      });
+
+    const carousel =
+      document.getElementById("home-carousel");
+
+    carousel.addEventListener(
+      "touchstart",
+      event => {
+        touchInicio =
+          event.changedTouches[0].screenX;
+      },
+      { passive: true }
+    );
+
+    carousel.addEventListener(
+      "touchend",
+      event => {
+        touchFin =
+          event.changedTouches[0].screenX;
+
+        const diferencia =
+          touchInicio - touchFin;
+
+        if (Math.abs(diferencia) < 45) return;
+
+        if (diferencia > 0) {
+          actualizarCarrusel(slideActual + 1);
+        } else {
+          actualizarCarrusel(slideActual - 1);
+        }
+
+        iniciarAutomatico();
+      },
+      { passive: true }
+    );
+
+    actualizarCarrusel(0);
+    iniciarAutomatico();
   }
 
   return {
