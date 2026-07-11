@@ -1,8 +1,0 @@
-[
-  { "icon": "PH", "name": "Panchitos", "description": "Combo rápido para comer entre rondas o mientras mirás una partida.", "detail": "Ideal para noche gamer" },
-  { "icon": "CC", "name": "Coca-Cola / bebidas frías", "description": "Bebidas frías para acompañar torneos, casuales y tardes de intercambio.", "detail": "Consultar stock del día" },
-  { "icon": "SN", "name": "Snacks", "description": "Opciones saladas y dulces para compartir en la mesa.", "detail": "Rotación semanal" },
-  { "icon": "MS", "name": "Mesas para jugar", "description": "Espacio cómodo para mazos, carpetas, sobres y partidas largas.", "detail": "Reserva por WhatsApp" },
-  { "icon": "NS", "name": "Consola Nintendo Switch", "description": "Partidas rápidas, torneos y noches especiales con amigos.", "detail": "Disponible por turnos" },
-  { "icon": "CH", "name": "Zona para abrir sobres", "description": "Abrí, ordená, protegé y compartí pulls con la comunidad.", "detail": "Chill y presencial" }
-]
