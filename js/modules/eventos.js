@@ -4,46 +4,54 @@ window.AfterModules.eventos=(()=>{
   let filter="Todos";
 
   const FILTERS = [
-    {
-      nombre: "Todos",
-      emoji: "✨",
-      clase: "filter-all",
-      subtitulo: "Ver todo"
-    },
-    {
-      nombre: "TCG",
-      emoji: "🎴",
-      clase: "filter-tcg",
-      subtitulo: "Cartas y torneos"
-    },
-    {
-      nombre: "Switch",
-      emoji: "🎮",
-      clase: "filter-switch",
-      subtitulo: "Consola y multijugador"
-    },
-    {
-      nombre: "Casual",
-      emoji: "🤝",
-      clase: "filter-casual",
-      subtitulo: "Jugar y compartir"
-    },
-    {
-      nombre: "Especial",
-      emoji: "⭐",
-      clase: "filter-special",
-      subtitulo: "Fechas diferentes"
-    }
+    { nombre:"Todos", emoji:"✨", clase:"filter-all" },
+    { nombre:"TCG", emoji:"🎴", clase:"filter-tcg" },
+    { nombre:"Switch", emoji:"🎮", clase:"filter-switch" },
+    { nombre:"Casual", emoji:"🤝", clase:"filter-casual" },
+    { nombre:"Especial", emoji:"⭐", clase:"filter-special" }
   ];
 
-  function render(){
-    const C=window.AfterComponents;
+  function getVisible(){
     const E=window.AFTER_EVENTOS;
 
-    const visible=
-      filter==="Todos"
-        ? E
-        : E.filter(evento=>evento.categoria===filter);
+    return filter==="Todos"
+      ? E
+      : E.filter(evento=>evento.categoria===filter);
+  }
+
+  function renderEventList(){
+    const C=window.AfterComponents;
+    const visible=getVisible();
+
+    const list=document.getElementById("event-list");
+    const count=document.getElementById("event-count");
+
+    if(count){
+      count.textContent=
+        `${visible.length} ${visible.length===1?"evento":"eventos"}`;
+    }
+
+    if(list){
+      list.innerHTML=
+        visible.length
+          ? visible.map(C.eventCard).join("")
+          : `<div class="empty-state">
+              No hay eventos en esta categoría.
+            </div>`;
+    }
+
+    document.querySelectorAll(".compact-filter").forEach(button=>{
+      button.classList.toggle(
+        "active",
+        button.dataset.filter===filter
+      );
+    });
+
+    window.AfterApp.bindCommon();
+  }
+
+  function render(){
+    const visible=getVisible();
 
     document.getElementById("app").innerHTML=`
       <section>
@@ -54,56 +62,50 @@ window.AfterModules.eventos=(()=>{
               Elegí tu próxima actividad
             </div>
 
-            <h2>
-              Eventos
-            </h2>
+            <h2>Eventos</h2>
           </div>
 
-          <span class="event-count-label">
+          <span
+            class="event-count-label"
+            id="event-count"
+          >
             ${visible.length}
-            ${visible.length===1 ? "evento" : "eventos"}
+            ${visible.length===1?"evento":"eventos"}
           </span>
         </div>
 
-        <div class="mission-filter-wrap">
+        <div class="compact-filter-grid">
 
-          <div class="mission-filters">
+          ${FILTERS.map(item=>`
+            <button
+              class="
+                compact-filter
+                ${item.clase}
+                ${item.nombre===filter?"active":""}
+              "
+              data-filter="${item.nombre}"
+            >
+              <span class="compact-filter-icon">
+                ${item.emoji}
+              </span>
 
-            ${FILTERS.map(item=>`
-              <button
-                class="
-                  mission-filter
-                  ${item.clase}
-                  ${item.nombre===filter ? "active" : ""}
-                "
-                data-filter="${item.nombre}"
-              >
-
-                <span class="mission-filter-icon">
-                  ${item.emoji}
-                </span>
-
-                <span class="mission-filter-text">
-                  <strong>
-                    ${item.nombre}
-                  </strong>
-
-                  <small>
-                    ${item.subtitulo}
-                  </small>
-                </span>
-
-              </button>
-            `).join("")}
-
-          </div>
+              <span class="compact-filter-label">
+                ${item.nombre}
+              </span>
+            </button>
+          `).join("")}
 
         </div>
 
-        <div class="event-list spaced">
+        <div
+          class="event-list spaced"
+          id="event-list"
+        >
           ${
             visible.length
-              ? visible.map(C.eventCard).join("")
+              ? visible
+                  .map(window.AfterComponents.eventCard)
+                  .join("")
               : `
                 <div class="empty-state">
                   No hay eventos en esta categoría.
@@ -118,11 +120,16 @@ window.AfterModules.eventos=(()=>{
     window.AfterApp.bindCommon();
 
     document
-      .querySelectorAll("[data-filter]")
+      .querySelectorAll(".compact-filter")
       .forEach(button=>{
         button.onclick=()=>{
+          if(filter===button.dataset.filter){
+            return;
+          }
+
           filter=button.dataset.filter;
-          render();
+
+          renderEventList();
         };
       });
   }

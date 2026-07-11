@@ -605,3 +605,119 @@
     font-size: 20px;
   }
 }
+
+
+/* ======================================================
+   FILTROS COMPACTOS EN DOS FILAS
+====================================================== */
+
+.compact-filter-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.compact-filter {
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 8px;
+  border: 1px solid var(--soft);
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.025),
+      rgba(255,255,255,.01)
+    ),
+    var(--surface);
+  color: var(--text);
+  transition:
+    transform .15s ease,
+    border-color .15s ease,
+    background .15s ease,
+    box-shadow .15s ease;
+}
+
+.compact-filter:active {
+  transform: scale(.96);
+}
+
+.compact-filter-icon {
+  font-size: 19px;
+}
+
+.compact-filter-label {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.compact-filter.active {
+  transform: translateY(-1px);
+}
+
+.filter-all.active {
+  border-color: var(--gold);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(216,165,58,.22),
+      rgba(216,165,58,.05)
+    ),
+    var(--surface);
+  box-shadow:
+    0 8px 22px rgba(216,165,58,.12);
+}
+
+.filter-tcg.active {
+  border-color: #daa942;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(218,169,66,.22),
+      rgba(218,169,66,.04)
+    ),
+    var(--surface);
+}
+
+.filter-switch.active {
+  border-color: #4ba8ff;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(75,168,255,.22),
+      rgba(75,168,255,.04)
+    ),
+    var(--surface);
+}
+
+.filter-casual.active {
+  border-color: #54d88c;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(84,216,140,.22),
+      rgba(84,216,140,.04)
+    ),
+    var(--surface);
+}
+
+.filter-special.active {
+  border-color: #b987ff;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(185,135,255,.22),
+      rgba(185,135,255,.04)
+    ),
+    var(--surface);
+}
+
+@media (max-width: 380px) {
+  .compact-filter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
