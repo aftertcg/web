@@ -148,6 +148,15 @@ window.AfterModules.inicio = (() => {
     const estado = obtenerEstadoLocal(proximoEvento);
     const slides = crearSlides(proximoEvento);
 
+    const noticiasActivas = (window.AFTER_NOTICIAS || [])
+      .filter(noticia => noticia.activa);
+
+    const noticiaDestacada =
+      noticiasActivas.find(
+        noticia =>
+          noticia.id === window.AFTER_NOTICIA_DESTACADA
+      ) || noticiasActivas[0] || null;
+
     document.getElementById("app").innerHTML = `
       <section class="home-final">
 
@@ -272,6 +281,27 @@ window.AfterModules.inicio = (() => {
         </article>
 
 
+        ${
+          noticiaDestacada
+            ? `
+              <button
+                class="home-featured-news"
+                data-featured-news="${noticiaDestacada.id}"
+              >
+                <span class="home-featured-news-icon">🗞️</span>
+
+                <div>
+                  <small>${noticiaDestacada.tipo}</small>
+                  <strong>${noticiaDestacada.titulo}</strong>
+                  <span>${noticiaDestacada.resumen}</span>
+                </div>
+
+                <b>›</b>
+              </button>
+            `
+            : ""
+        }
+
         <div class="home-final-heading">
 
           <div>
@@ -382,6 +412,18 @@ window.AfterModules.inicio = (() => {
     `;
 
     window.AfterApp.bindCommon();
+
+    const featuredNews =
+      document.querySelector("[data-featured-news]");
+
+    if (featuredNews) {
+      featuredNews.onclick = () => {
+        window.AFTER_NEWS_TARGET =
+          featuredNews.dataset.featuredNews;
+
+        window.AfterRouter.go("noticias");
+      };
+    }
 
     document
       .getElementById("home-carousel-prev")

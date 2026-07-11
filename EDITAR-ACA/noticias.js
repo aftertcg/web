@@ -1,3 +1,5 @@
+window.AFTER_NOTICIA_DESTACADA = "nueva-consola";
+
 window.AFTER_NOTICIAS = [
   {
     id: "nueva-consola",

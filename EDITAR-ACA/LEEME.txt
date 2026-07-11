@@ -1,0 +1,42 @@
+AFTER TCG — ARCHIVOS EDITABLES
+
+config.js
+- WhatsApp
+- Instagram
+- dirección
+- días de apertura
+- consumos y datos generales
+
+eventos.js
+- eventos
+- fechas y horarios
+- cupos y reservas
+- precios
+- imágenes
+- descripción e información incluida
+
+noticias.js
+- noticias, preventas y anuncios
+- para elegir la destacada, modificar:
+  window.AFTER_NOTICIA_DESTACADA = "ID-DE-LA-NOTICIA";
+- máximo recomendado: 5 noticias activas
+- estados sugeridos:
+  NUEVO, PREVENTA, REINGRESO, ANUNCIO, LOCAL, AGOTADO
+
+rankings.js
+- After Liga
+- rankings de cada juego
+
+resultados.js
+- campeones y resultados pasados
+
+galeria.js
+- fotos y momentos de la comunidad
+
+comunidad.js
+- archivo anterior conservado por compatibilidad
+- los datos principales actuales están en rankings.js,
+  resultados.js y galeria.js
+
+IMPORTANTE
+No modificar HTML, CSS ni JS para actualizar contenido normal.

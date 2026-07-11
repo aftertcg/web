@@ -16,6 +16,11 @@ window.AfterModules.noticias = (() => {
   function render() {
     const C = window.AFTER_CONFIG;
 
+    if (window.AFTER_NEWS_TARGET) {
+      abierta = window.AFTER_NEWS_TARGET;
+      window.AFTER_NEWS_TARGET = null;
+    }
+
     const noticias = (window.AFTER_NOTICIAS || [])
       .filter(noticia => noticia.activa)
       .sort(
