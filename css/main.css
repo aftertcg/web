@@ -1817,3 +1817,379 @@
 }
 
 /* AFTER-COMMUNITY-V2-END */
+
+
+
+/* AFTER-CONTACT-V2-START */
+
+.contact-page {
+  padding-bottom: 8px;
+}
+
+.contact-hero {
+  position: relative;
+  min-height: 480px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.contact-hero-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5,7,10,.08),
+      rgba(5,7,10,.94) 78%
+    );
+}
+
+.contact-hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 22px;
+}
+
+.contact-hero-content h1 {
+  max-width: 480px;
+  margin: 8px 0 12px;
+  font-size: clamp(31px, 9vw, 48px);
+  line-height: .98;
+  text-transform: uppercase;
+}
+
+.contact-hero-content p {
+  max-width: 500px;
+  color: #c7cbd3;
+  line-height: 1.5;
+}
+
+.contact-hero-actions {
+  display: grid;
+  grid-template-columns: 1.2fr .8fr;
+  gap: 9px;
+  margin-top: 18px;
+}
+
+.contact-instagram-btn {
+  width: 100%;
+}
+
+.contact-next-event {
+  margin-top: 14px;
+  padding: 17px;
+}
+
+.contact-next-event-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.contact-next-event-top h2 {
+  margin: 5px 0 0;
+  font-size: 21px;
+}
+
+.contact-event-category {
+  height: fit-content;
+  padding: 6px 9px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--gold2);
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.contact-next-event-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin: 13px 0;
+}
+
+.contact-next-event-meta span {
+  padding: 7px 9px;
+  border-radius: 999px;
+  background: var(--surface2);
+  color: #c9cdd5;
+  font-size: 10px;
+}
+
+.contact-event-buttons {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 9px;
+}
+
+.contact-event-buttons .btn {
+  width: 100%;
+}
+
+.contact-section-head {
+  margin-top: 28px;
+}
+
+.contact-location-card {
+  padding: 16px;
+}
+
+.contact-location-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.contact-location-icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: rgba(216,165,58,.12);
+  font-size: 21px;
+}
+
+.contact-location-info strong,
+.contact-location-info span {
+  display: block;
+}
+
+.contact-location-info strong {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.contact-location-info span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.contact-map {
+  width: 100%;
+  height: 230px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 18px;
+  background: #dedede;
+}
+
+.contact-schedule-card {
+  padding: 7px 16px 14px;
+}
+
+.contact-schedule-row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--soft);
+}
+
+.contact-day-icon {
+  width: 39px;
+  height: 39px;
+  flex: 0 0 39px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: var(--surface2);
+  font-size: 18px;
+}
+
+.contact-schedule-row strong,
+.contact-schedule-row span {
+  display: block;
+}
+
+.contact-schedule-row strong {
+  font-size: 13px;
+}
+
+.contact-schedule-row span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.contact-schedule-note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.contact-direct-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.contact-direct-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-height: 128px;
+  padding: 14px;
+  border: 1px solid var(--soft);
+  border-radius: 17px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.contact-whatsapp {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(52,201,113,.18),
+      rgba(17,20,27,.75)
+    );
+  border-color: rgba(52,201,113,.35);
+}
+
+.contact-instagram {
+  background:
+    linear-gradient(
+      145deg,
+      rgba(185,90,255,.16),
+      rgba(216,165,58,.08),
+      rgba(17,20,27,.75)
+    );
+  border-color: rgba(185,135,255,.3);
+}
+
+.contact-direct-icon {
+  font-size: 24px;
+}
+
+.contact-direct-card strong,
+.contact-direct-card span,
+.contact-direct-card small {
+  display: block;
+}
+
+.contact-direct-card strong {
+  font-size: 14px;
+}
+
+.contact-direct-card span {
+  margin-top: 4px;
+  color: #d5d8df;
+  font-size: 11px;
+}
+
+.contact-direct-card small {
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 9px;
+  line-height: 1.35;
+}
+
+.contact-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+}
+
+.contact-features > div {
+  min-height: 86px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--soft);
+  border-radius: 15px;
+  background: var(--surface);
+}
+
+.contact-features span {
+  font-size: 23px;
+}
+
+.contact-features strong {
+  font-size: 10px;
+}
+
+.contact-faq {
+  display: grid;
+  gap: 8px;
+}
+
+.contact-faq-item {
+  overflow: hidden;
+  border: 1px solid var(--soft);
+  border-radius: 15px;
+  background: var(--surface);
+}
+
+.contact-faq-question {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 14px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+}
+
+.contact-faq-question span {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.contact-faq-question b {
+  color: var(--gold2);
+  font-size: 18px;
+}
+
+.contact-faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition:
+    max-height .22s ease,
+    padding .22s ease;
+}
+
+.contact-faq-answer p {
+  margin: 0;
+  padding: 0 14px 14px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+.contact-faq-item.is-open .contact-faq-answer {
+  max-height: 150px;
+}
+
+@media (max-width: 390px) {
+  .contact-hero {
+    min-height: 450px;
+  }
+
+  .contact-hero-actions,
+  .contact-event-buttons,
+  .contact-direct-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* AFTER-CONTACT-V2-END */
