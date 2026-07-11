@@ -2,25 +2,12 @@ window.AfterModules = window.AfterModules || {};
 
 window.AfterModules.calendario = (() => {
   let monthOffset = 0;
-  let selectedDate = null;
 
-  const CATEGORY_DATA = {
-    TCG: {
-      emoji: "🎴",
-      css: "calendar-tcg"
-    },
-    Switch: {
-      emoji: "🎮",
-      css: "calendar-switch"
-    },
-    Casual: {
-      emoji: "🤝",
-      css: "calendar-casual"
-    },
-    Especial: {
-      emoji: "⭐",
-      css: "calendar-special"
-    }
+  const CATEGORY_CLASS = {
+    TCG: "day-tcg",
+    Switch: "day-switch",
+    Casual: "day-casual",
+    Especial: "day-special"
   };
 
   function monthStart(offset = 0) {
@@ -51,52 +38,92 @@ window.AfterModules.calendario = (() => {
           date.getMonth() === month
         );
       })
-      .sort(
-        (a, b) =>
+      .sort((a, b) => {
+        return (
           new Date(`${a.fecha}T${a.hora}`) -
           new Date(`${b.fecha}T${b.hora}`)
-      );
+        );
+      });
   }
 
-  function availablePlaces(events) {
-    return events.reduce(
-      (total, event) =>
-        total +
-        Math.max(
-          0,
-          Number(event.cuposTotales) -
-          Number(event.reservados)
-        ),
-      0
-    );
-  }
+  function openDayEvents(events) {
+    if (!events.length) return;
 
-  function chooseDefaultEvent(monthEvents) {
-    const selected = monthEvents.find(
-      event => event.fecha === selectedDate
-    );
-
-    if (selected) {
-      return selected;
+    if (events.length === 1) {
+      window.AfterApp.openEvent(events[0].id);
+      return;
     }
 
-    const now = new Date();
+    const modal = document.getElementById("event-modal");
+    const content = document.getElementById("modal-content");
+    const U = window.AfterUtils;
 
-    const next = monthEvents.find(
-      event =>
-        new Date(`${event.fecha}T${event.hora}`) >= now
-    );
+    content.innerHTML = `
+      <div class="multi-event-modal">
 
-    return next || monthEvents[0] || null;
+        <div class="kicker">
+          ${U.dateText(events[0].fecha)}
+        </div>
+
+        <h2>
+          ${events.length} eventos este día
+        </h2>
+
+        <div class="multi-event-list">
+
+          ${events.map(event => `
+            <button
+              class="multi-event-option"
+              data-open-event="${event.id}"
+            >
+              <div class="multi-event-time">
+                ${event.hora}
+              </div>
+
+              <div class="multi-event-info">
+                <strong>${event.titulo}</strong>
+
+                <span>
+                  ${event.categoria} ·
+                  ${U.availability(event)}
+                </span>
+              </div>
+
+              <div class="multi-event-arrow">
+                ›
+              </div>
+            </button>
+          `).join("")}
+
+        </div>
+
+      </div>
+    `;
+
+    modal.showModal();
+
+    document
+      .querySelectorAll("[data-open-event]")
+      .forEach(button => {
+        button.onclick = () => {
+          modal.close();
+
+          setTimeout(() => {
+            window.AfterApp.openEvent(
+              button.dataset.openEvent
+            );
+          }, 100);
+        };
+      });
   }
 
   function render() {
-    const U = window.AfterUtils;
-    const C = window.AfterComponents;
-
     const shownMonth = monthStart(monthOffset);
+
     const year = shownMonth.getFullYear();
     const month = shownMonth.getMonth();
+
+    const monthEvents = eventsForMonth(year, month);
 
     const monthName = new Intl.DateTimeFormat(
       "es-AR",
@@ -106,27 +133,6 @@ window.AfterModules.calendario = (() => {
       }
     ).format(shownMonth);
 
-    const currentMonthName = new Intl.DateTimeFormat(
-      "es-AR",
-      {
-        month: "long"
-      }
-    ).format(monthStart(0));
-
-    const nextMonthName = new Intl.DateTimeFormat(
-      "es-AR",
-      {
-        month: "long"
-      }
-    ).format(monthStart(1));
-
-    const monthEvents = eventsForMonth(year, month);
-    const selectedEvent = chooseDefaultEvent(monthEvents);
-
-    if (selectedEvent) {
-      selectedDate = selectedEvent.fecha;
-    }
-
     const firstWeekday =
       (new Date(year, month, 1).getDay() + 6) % 7;
 
@@ -134,6 +140,7 @@ window.AfterModules.calendario = (() => {
       new Date(year, month + 1, 0).getDate();
 
     const today = new Date();
+
     const todayIso = isoDate(
       today.getFullYear(),
       today.getMonth(),
@@ -143,7 +150,9 @@ window.AfterModules.calendario = (() => {
     let cells = "";
 
     for (let i = 0; i < firstWeekday; i++) {
-      cells += `<span class="calendar-day calendar-empty"></span>`;
+      cells += `
+        <span class="agenda-day is-empty"></span>
+      `;
     }
 
     for (let day = 1; day <= totalDays; day++) {
@@ -155,88 +164,105 @@ window.AfterModules.calendario = (() => {
 
       const firstEvent = dayEvents[0];
 
-      const category =
-        firstEvent &&
-        CATEGORY_DATA[firstEvent.categoria]
-          ? CATEGORY_DATA[firstEvent.categoria]
-          : null;
-
       const categoryClass =
-        category ? category.css : "";
-
-      const emoji =
-        category ? category.emoji : "";
+        firstEvent
+          ? CATEGORY_CLASS[firstEvent.categoria] || ""
+          : "";
 
       cells += `
         <button
           class="
-            calendar-day
+            agenda-day
             ${dayEvents.length ? "has-event" : ""}
             ${categoryClass}
-            ${iso === selectedDate ? "is-selected" : ""}
             ${iso === todayIso ? "is-today" : ""}
           "
-          data-date="${iso}"
+          data-day="${iso}"
           ${dayEvents.length ? "" : "disabled"}
         >
-          <span class="calendar-number">
+
+          <span class="agenda-day-number">
             ${day}
           </span>
 
           ${
             dayEvents.length
               ? `
-                <span class="calendar-event-icon">
-                  ${emoji}
-                </span>
-
-                ${
-                  dayEvents.length > 1
-                    ? `
-                      <small class="calendar-event-count">
-                        +${dayEvents.length - 1}
-                      </small>
-                    `
-                    : ""
-                }
+                <span class="agenda-day-dot"></span>
               `
               : ""
           }
+
+          ${
+            dayEvents.length > 1
+              ? `
+                <small class="agenda-day-count">
+                  ${dayEvents.length}
+                </small>
+              `
+              : ""
+          }
+
         </button>
       `;
     }
 
-    document.getElementById("app").innerHTML = `
-      <section>
+    const availablePlaces = monthEvents.reduce(
+      (total, event) => {
+        return (
+          total +
+          Math.max(
+            0,
+            Number(event.cuposTotales) -
+            Number(event.reservados)
+          )
+        );
+      },
+      0
+    );
 
-        <div class="section-head calendar-page-heading">
+    document.getElementById("app").innerHTML = `
+      <section class="calendar-screen">
+
+        <div class="calendar-header">
+
           <div>
             <div class="kicker">
-              Agenda de actividades
+              Próximas actividades
             </div>
 
-            <h2>Calendario</h2>
+            <h1>Agenda</h1>
           </div>
 
-          <span class="calendar-range">
-            ${currentMonthName} y ${nextMonthName}
-          </span>
+          <div class="calendar-month-summary">
+            <strong>${monthEvents.length}</strong>
+
+            <span>
+              ${
+                monthEvents.length === 1
+                  ? "evento"
+                  : "eventos"
+              }
+            </span>
+          </div>
+
         </div>
 
-        <article class="card calendar-panel">
+        <article class="agenda-card">
 
-          <div class="calendar-toolbar">
+          <div class="agenda-toolbar">
 
             <button
-              class="calendar-arrow"
+              class="agenda-arrow"
               id="calendar-prev"
-              aria-label="Mes anterior"
               ${monthOffset === 0 ? "disabled" : ""}
+              aria-label="Volver al mes actual"
             >
               ‹
             </button>
 
-            <div class="calendar-month-title">
+            <div class="agenda-month">
+
               <small>
                 ${
                   monthOffset === 0
@@ -245,158 +271,102 @@ window.AfterModules.calendario = (() => {
                 }
               </small>
 
-              <h3>${monthName}</h3>
+              <h2>${monthName}</h2>
+
             </div>
 
             <button
-              class="calendar-arrow"
+              class="agenda-arrow"
               id="calendar-next"
-              aria-label="Mes siguiente"
               ${monthOffset === 1 ? "disabled" : ""}
+              aria-label="Ver mes siguiente"
             >
               ›
             </button>
 
           </div>
 
-          <div class="calendar-summary">
+          <div class="agenda-stats">
 
-            <div>
-              <strong>${monthEvents.length}</strong>
-              <span>
-                ${
-                  monthEvents.length === 1
-                    ? "evento"
-                    : "eventos"
-                }
-              </span>
-            </div>
+            <span>
+              <b>${monthEvents.length}</b>
+              fechas
+            </span>
 
-            <div>
-              <strong>
-                ${availablePlaces(monthEvents)}
-              </strong>
-              <span>lugares disponibles</span>
-            </div>
+            <span>
+              <b>${availablePlaces}</b>
+              lugares
+            </span>
 
           </div>
 
-          <div class="calendar-weekdays">
+          <div class="agenda-weekdays">
+
             ${["L", "M", "M", "J", "V", "S", "D"]
-              .map(
-                day => `<span>${day}</span>`
-              )
+              .map(day => `<span>${day}</span>`)
               .join("")}
+
           </div>
 
-          <div class="calendar-grid">
+          <div class="agenda-grid">
             ${cells}
           </div>
 
-          <div class="calendar-legend">
+          <div class="agenda-legend">
 
             <span class="legend-tcg">
-              <i></i> 🎴 TCG
+              <i></i> TCG
             </span>
 
             <span class="legend-switch">
-              <i></i> 🎮 Switch
+              <i></i> Switch
             </span>
 
             <span class="legend-casual">
-              <i></i> 🤝 Casual
+              <i></i> Casual
             </span>
 
             <span class="legend-special">
-              <i></i> ⭐ Especial
+              <i></i> Especial
             </span>
 
           </div>
 
+          <p class="agenda-hint">
+            Tocá un día marcado para ver sus eventos.
+          </p>
+
         </article>
-
-        <div class="section-head">
-          <div>
-            <div class="kicker">
-              ${
-                selectedEvent
-                  ? U.dateText(selectedEvent.fecha)
-                  : "Sin actividad"
-              }
-            </div>
-
-            <h2>
-              ${
-                selectedEvent
-                  ? "Evento seleccionado"
-                  : "No hay eventos"
-              }
-            </h2>
-          </div>
-        </div>
-
-        <div id="selected-calendar-event">
-
-          ${
-            selectedEvent
-              ? C.eventCard(selectedEvent)
-              : `
-                <article class="card calendar-no-events">
-
-                  <div class="calendar-no-events-icon">
-                    📅
-                  </div>
-
-                  <h3>
-                    Todavía no hay eventos cargados
-                  </h3>
-
-                  <p>
-                    Revisá el otro mes o volvé más adelante
-                    para conocer las nuevas fechas.
-                  </p>
-
-                </article>
-              `
-          }
-
-        </div>
 
       </section>
     `;
 
-    document
-      .getElementById("calendar-prev")
-      .onclick = () => {
-        if (monthOffset === 1) {
-          monthOffset = 0;
-          selectedDate = null;
-          render();
-        }
-      };
+    document.getElementById("calendar-prev").onclick = () => {
+      if (monthOffset === 1) {
+        monthOffset = 0;
+        render();
+      }
+    };
+
+    document.getElementById("calendar-next").onclick = () => {
+      if (monthOffset === 0) {
+        monthOffset = 1;
+        render();
+      }
+    };
 
     document
-      .getElementById("calendar-next")
-      .onclick = () => {
-        if (monthOffset === 0) {
-          monthOffset = 1;
-          selectedDate = null;
-          render();
-        }
-      };
-
-    document
-      .querySelectorAll(
-        ".calendar-day.has-event"
-      )
+      .querySelectorAll(".agenda-day.has-event")
       .forEach(button => {
         button.onclick = () => {
-          selectedDate = button.dataset.date;
-          render();
+          const events = monthEvents.filter(
+            event =>
+              event.fecha === button.dataset.day
+          );
+
+          openDayEvents(events);
         };
       });
-
-    window.AfterApp.bindCommon();
   }
 
   return {
