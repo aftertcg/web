@@ -372,3 +372,236 @@
     font-size: 20px;
   }
 }
+
+/* ======================================================
+   FILTROS DE EVENTOS TIPO MISIÓN
+====================================================== */
+
+.event-page-head {
+  align-items: flex-end;
+}
+
+.event-page-head h2 {
+  margin-top: 4px;
+}
+
+.event-count-label {
+  padding: 7px 10px;
+  border: 1px solid var(--soft);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.mission-filter-wrap {
+  position: relative;
+  margin: 2px -14px 12px;
+}
+
+.mission-filter-wrap::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 34px;
+  height: 100%;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      var(--bg)
+    );
+}
+
+.mission-filters {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 14px 10px;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.mission-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.mission-filter {
+  min-width: 165px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 12px;
+  border: 1px solid var(--soft);
+  border-radius: 17px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,.025),
+      rgba(255,255,255,.01)
+    ),
+    var(--surface);
+  color: var(--text);
+  text-align: left;
+  scroll-snap-align: start;
+  transition:
+    transform .18s ease,
+    border-color .18s ease,
+    background .18s ease,
+    box-shadow .18s ease;
+}
+
+.mission-filter:active {
+  transform: scale(.97);
+}
+
+.mission-filter-icon {
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: rgba(255,255,255,.055);
+  font-size: 22px;
+}
+
+.mission-filter-text {
+  min-width: 0;
+}
+
+.mission-filter-text strong,
+.mission-filter-text small {
+  display: block;
+}
+
+.mission-filter-text strong {
+  font-size: 14px;
+}
+
+.mission-filter-text small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.25;
+}
+
+.mission-filter.active {
+  transform: translateY(-2px);
+}
+
+.mission-filter.active .mission-filter-text small {
+  color: rgba(255,255,255,.72);
+}
+
+
+/* Todos */
+.filter-all.active {
+  border-color: var(--gold);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(216,165,58,.22),
+      rgba(216,165,58,.05)
+    ),
+    var(--surface);
+  box-shadow:
+    0 10px 28px rgba(216,165,58,.13);
+}
+
+.filter-all.active .mission-filter-icon {
+  background: rgba(216,165,58,.17);
+}
+
+
+/* TCG */
+.filter-tcg.active {
+  border-color: #daaa42;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(218,170,66,.23),
+      rgba(218,170,66,.04)
+    ),
+    var(--surface);
+  box-shadow:
+    0 10px 28px rgba(218,170,66,.13);
+}
+
+.filter-tcg.active .mission-filter-icon {
+  background: rgba(218,170,66,.18);
+}
+
+
+/* Switch */
+.filter-switch.active {
+  border-color: #4ba8ff;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(75,168,255,.23),
+      rgba(75,168,255,.04)
+    ),
+    var(--surface);
+  box-shadow:
+    0 10px 28px rgba(75,168,255,.13);
+}
+
+.filter-switch.active .mission-filter-icon {
+  background: rgba(75,168,255,.18);
+}
+
+
+/* Casual */
+.filter-casual.active {
+  border-color: #54d88c;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(84,216,140,.22),
+      rgba(84,216,140,.04)
+    ),
+    var(--surface);
+  box-shadow:
+    0 10px 28px rgba(84,216,140,.12);
+}
+
+.filter-casual.active .mission-filter-icon {
+  background: rgba(84,216,140,.18);
+}
+
+
+/* Especial */
+.filter-special.active {
+  border-color: #b987ff;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(185,135,255,.22),
+      rgba(185,135,255,.04)
+    ),
+    var(--surface);
+  box-shadow:
+    0 10px 28px rgba(185,135,255,.12);
+}
+
+.filter-special.active .mission-filter-icon {
+  background: rgba(185,135,255,.18);
+}
+
+@media (max-width: 390px) {
+  .mission-filter {
+    min-width: 151px;
+    padding: 10px;
+  }
+
+  .mission-filter-icon {
+    width: 39px;
+    height: 39px;
+    flex-basis: 39px;
+    font-size: 20px;
+  }
+}
