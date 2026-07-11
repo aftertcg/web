@@ -1,40 +1,34 @@
 window.AfterModules = window.AfterModules || {};
 
 window.AfterModules.contacto = (() => {
-  function getNextEvent() {
-    const eventos = window.AfterUtils.upcoming();
-
-    return eventos.length ? eventos[0] : null;
-  }
-
   function renderFaq() {
-    const items = [
+    const preguntas = [
       {
-        pregunta: "¿Hace falta reservar?",
+        pregunta: "¿Tengo que reservar para ir?",
         respuesta:
-          "Sí, la mayoría de los eventos tiene cupos limitados. La reserva se confirma por WhatsApp."
+          "Para los eventos con cupos limitados sí. La reserva se confirma por WhatsApp. Para fechas abiertas o encuentros casuales, revisá siempre la agenda."
       },
       {
-        pregunta: "¿Puedo venir sin jugar un torneo?",
+        pregunta: "¿Puedo ir aunque no participe de un torneo?",
         respuesta:
-          "Sí. También organizamos encuentros casuales, intercambios, aperturas y noches de Switch."
+          "Sí. Dependiendo de la actividad podés venir a jugar casual, intercambiar cartas, usar la Nintendo Switch, abrir sobres o pasar el rato."
       },
       {
-        pregunta: "¿Puedo traer mi mazo o binder?",
+        pregunta: "¿Puedo llevar comida o bebida?",
         respuesta:
-          "Sí. Podés traer tus cartas, mazos, carpetas y accesorios para jugar o intercambiar."
+          "En el local ofrecemos panchitos, bebidas frías, agua y snacks. Para consumir productos externos, consultanos antes."
       },
       {
-        pregunta: "¿Hay comida y bebida?",
+        pregunta: "¿Puedo llevar mi mazo, binder o consola?",
         respuesta:
-          "Sí. Hay panchitos, bebidas frías, agua y snacks para consumir durante la actividad."
+          "Podés traer tu mazo, binder y cartas para jugar o intercambiar. Si querés llevar una consola o accesorio propio, consultanos por WhatsApp."
       }
     ];
 
-    return items.map((item, index) => `
-      <article class="contact-faq-item">
+    return preguntas.map((item, index) => `
+      <article class="visit-faq-item">
         <button
-          class="contact-faq-question"
+          class="visit-faq-question"
           data-faq="${index}"
           aria-expanded="false"
         >
@@ -42,7 +36,7 @@ window.AfterModules.contacto = (() => {
           <b>+</b>
         </button>
 
-        <div class="contact-faq-answer">
+        <div class="visit-faq-answer">
           <p>${item.respuesta}</p>
         </div>
       </article>
@@ -51,382 +45,264 @@ window.AfterModules.contacto = (() => {
 
   function render() {
     const C = window.AFTER_CONFIG;
-    const U = window.AfterUtils;
-    const next = getNextEvent();
 
     document.getElementById("app").innerHTML = `
-      <section class="contact-page">
+      <section class="visit-page">
 
-        <article class="contact-hero card">
-
-          <img
-            src="assets/local/local-base.jpg"
-            alt="Imagen ilustrativa de After TCG"
-            class="contact-hero-image"
-          >
-
-          <div class="contact-hero-overlay"></div>
-
-          <div class="contact-hero-content">
-
+        <div class="visit-header">
+          <div>
             <div class="kicker">
               📍 Almagro, CABA
             </div>
 
-            <h1>Vení a conocer After TCG</h1>
+            <h1>Visítanos</h1>
 
             <p>
-              Un espacio para jugar TCG, participar de torneos,
-              disfrutar Nintendo Switch, comer algo y compartir
-              el hobby con la comunidad.
+              Conocé el espacio, mirá cómo llegar y escribinos
+              antes de venir.
             </p>
-
-            <div class="contact-hero-actions">
-
-              <a
-                class="btn btn-primary"
-                href="${C.mapsUrl}"
-                target="_blank"
-                rel="noopener"
-              >
-                Abrir Google Maps
-              </a>
-
-              <a
-                class="btn btn-secondary contact-instagram-btn"
-                href="${C.instagramUrl}"
-                target="_blank"
-                rel="noopener"
-              >
-                Instagram
-              </a>
-
-            </div>
-
           </div>
-
-        </article>
-
-
-        ${
-          next
-            ? `
-              <article class="card contact-next-event">
-
-                <div class="contact-next-event-top">
-
-                  <div>
-                    <div class="kicker">
-                      Próxima actividad
-                    </div>
-
-                    <h2>${next.titulo}</h2>
-                  </div>
-
-                  <span class="contact-event-category">
-                    ${next.categoria}
-                  </span>
-
-                </div>
-
-                <div class="contact-next-event-meta">
-
-                  <span>
-                    📅 ${U.dateText(next.fecha)}
-                  </span>
-
-                  <span>
-                    🕒 ${next.hora}
-                  </span>
-
-                  <span>
-                    👥 ${U.availability(next)}
-                  </span>
-
-                </div>
-
-                ${U.progress(next)}
-
-                <div class="contact-event-buttons">
-
-                  <button
-                    class="btn btn-secondary js-detail"
-                    data-event="${next.id}"
-                  >
-                    Ver evento
-                  </button>
-
-                  <button
-                    class="btn btn-primary js-reserve"
-                    data-event="${next.id}"
-                    ${
-                      U.remaining(next) === 0
-                        ? "disabled"
-                        : ""
-                    }
-                  >
-                    ${
-                      U.remaining(next) === 0
-                        ? "Completo"
-                        : "Reservar"
-                    }
-                  </button>
-
-                </div>
-
-              </article>
-            `
-            : ""
-        }
-
-
-        <div class="section-head contact-section-head">
-
-          <div>
-            <div class="kicker">
-              Cómo llegar
-            </div>
-
-            <h2>Ubicación</h2>
-          </div>
-
         </div>
 
-        <article class="card contact-location-card">
 
-          <div class="contact-location-info">
+        <article class="card visit-location-card">
 
-            <div class="contact-location-icon">
-              📍
-            </div>
-
-            <div>
-              <strong>${C.direccion}</strong>
-
-              <span>
-                Almagro, Ciudad Autónoma de Buenos Aires
-              </span>
-            </div>
-
-          </div>
-
-          <a
-            class="btn btn-primary"
-            href="${C.mapsUrl}"
-            target="_blank"
-            rel="noopener"
+          <img
+            src="assets/local/local-base.jpg"
+            alt="Imagen ilustrativa del local After TCG"
+            class="visit-location-image"
           >
-            Ver recorrido
-          </a>
 
-        </article>
+          <div class="visit-location-content">
 
-        <iframe
-          class="contact-map"
-          src="${C.mapsEmbed}"
-          loading="lazy"
-          title="Mapa de After TCG"
-        ></iframe>
+            <div class="visit-address">
 
-
-        <div class="section-head contact-section-head">
-
-          <div>
-            <div class="kicker">
-              Días de actividad
-            </div>
-
-            <h2>Horarios</h2>
-          </div>
-
-        </div>
-
-        <article class="card contact-schedule-card">
-
-          ${C.dias.map(day => `
-            <div class="contact-schedule-row">
-
-              <div class="contact-day-icon">
-                ${
-                  day.nombre === "Martes"
-                    ? "🎴"
-                    : day.nombre === "Viernes"
-                      ? "🏆"
-                      : "🎮"
-                }
+              <div class="visit-address-icon">
+                📍
               </div>
 
               <div>
-                <strong>${day.nombre}</strong>
+                <small>Nuestra dirección</small>
 
+                <strong>
+                  ${C.direccion}
+                </strong>
+
+                <span>
+                  Almagro, Ciudad Autónoma de Buenos Aires
+                </span>
+              </div>
+
+            </div>
+
+            <a
+              class="btn btn-primary"
+              href="${C.mapsUrl}"
+              target="_blank"
+              rel="noopener"
+            >
+              Abrir en Google Maps
+            </a>
+
+          </div>
+
+        </article>
+
+
+        <div class="section-head visit-section-head">
+          <div>
+            <div class="kicker">
+              Ubicación
+            </div>
+
+            <h2>Cómo llegar</h2>
+          </div>
+        </div>
+
+        <iframe
+          class="visit-map"
+          src="${C.mapsEmbed}"
+          loading="lazy"
+          title="Ubicación de After TCG"
+        ></iframe>
+
+
+        <div class="section-head visit-section-head">
+          <div>
+            <div class="kicker">
+              Antes de venir
+            </div>
+
+            <h2>Días de actividad</h2>
+          </div>
+        </div>
+
+        <article class="card visit-days-card">
+
+          ${C.dias.map(day => `
+            <div class="visit-day-row">
+
+              <div class="visit-day-name">
+                <strong>${day.nombre}</strong>
+              </div>
+
+              <div class="visit-day-status">
                 <span>${day.horario}</span>
               </div>
 
             </div>
           `).join("")}
 
-          <p class="contact-schedule-note">
-            Los horarios pueden variar según la actividad.
-            Consultá el calendario antes de venir.
+          <p class="visit-note">
+            After TCG funciona principalmente mediante actividades
+            programadas. Los horarios dependen del evento del día.
+            Revisá la agenda antes de venir.
           </p>
 
         </article>
 
 
-        <div class="section-head contact-section-head">
+        <div class="section-head visit-section-head">
+          <div>
+            <div class="kicker">
+              El espacio
+            </div>
 
+            <h2>Qué vas a encontrar</h2>
+          </div>
+        </div>
+
+        <div class="visit-features">
+
+          <article class="visit-feature">
+            <span>🎴</span>
+            <strong>Mesas para TCG</strong>
+            <p>Torneos, partidas casuales e intercambios.</p>
+          </article>
+
+          <article class="visit-feature">
+            <span>🎮</span>
+            <strong>Nintendo Switch</strong>
+            <p>Juegos multijugador y actividades especiales.</p>
+          </article>
+
+          <article class="visit-feature">
+            <span>🌭</span>
+            <strong>Comida</strong>
+            <p>Panchitos y opciones simples para acompañar la actividad.</p>
+          </article>
+
+          <article class="visit-feature">
+            <span>🥤</span>
+            <strong>Bebidas y snacks</strong>
+            <p>Bebidas frías, agua y snacks.</p>
+          </article>
+
+          <article class="visit-feature">
+            <span>🤝</span>
+            <strong>Comunidad</strong>
+            <p>Un lugar para conocer gente y compartir el hobby.</p>
+          </article>
+
+          <article class="visit-feature">
+            <span>✨</span>
+            <strong>Eventos temáticos</strong>
+            <p>Cada fecha tiene una propuesta distinta.</p>
+          </article>
+
+        </div>
+
+
+        <div class="section-head visit-section-head">
           <div>
             <div class="kicker">
               Reservas y consultas
             </div>
 
-            <h2>Contacto directo</h2>
+            <h2>Contactanos</h2>
           </div>
-
         </div>
 
-        <div class="contact-direct-grid">
+        <div class="visit-contact-grid">
 
           <a
-            class="contact-direct-card contact-whatsapp"
+            class="visit-contact-card visit-whatsapp"
             href="https://wa.me/${C.whatsapp}?text=${encodeURIComponent(C.mensajeGeneral)}"
             target="_blank"
             rel="noopener"
           >
-
-            <div class="contact-direct-icon">
+            <div class="visit-contact-icon">
               💬
             </div>
 
             <div>
               <strong>WhatsApp</strong>
               <span>${C.telefonoVisible}</span>
-              <small>Consultas, reservas y cupos</small>
+              <small>Reservas, cupos y consultas.</small>
             </div>
-
           </a>
 
           <a
-            class="contact-direct-card contact-instagram"
+            class="visit-contact-card visit-instagram"
             href="${C.instagramUrl}"
             target="_blank"
             rel="noopener"
           >
-
-            <div class="contact-direct-icon">
+            <div class="visit-contact-icon">
               📸
             </div>
 
             <div>
               <strong>Instagram</strong>
               <span>${C.instagram}</span>
-              <small>Fotos, anuncios y novedades</small>
+              <small>Fotos, anuncios y novedades.</small>
             </div>
-
           </a>
 
         </div>
 
 
-        <div class="section-head contact-section-head">
-
+        <div class="section-head visit-section-head">
           <div>
             <div class="kicker">
-              La experiencia
-            </div>
-
-            <h2>Qué vas a encontrar</h2>
-          </div>
-
-        </div>
-
-        <div class="contact-features">
-
-          <div>
-            <span>🎴</span>
-            <strong>TCG</strong>
-          </div>
-
-          <div>
-            <span>🎮</span>
-            <strong>Switch</strong>
-          </div>
-
-          <div>
-            <span>🌭</span>
-            <strong>Panchitos</strong>
-          </div>
-
-          <div>
-            <span>🥤</span>
-            <strong>Bebidas</strong>
-          </div>
-
-          <div>
-            <span>🍿</span>
-            <strong>Snacks</strong>
-          </div>
-
-          <div>
-            <span>👥</span>
-            <strong>Comunidad</strong>
-          </div>
-
-        </div>
-
-
-        <div class="section-head contact-section-head">
-
-          <div>
-            <div class="kicker">
-              Antes de venir
+              Información útil
             </div>
 
             <h2>Preguntas frecuentes</h2>
           </div>
-
         </div>
 
-        <div class="contact-faq">
+        <div class="visit-faq">
           ${renderFaq()}
         </div>
 
       </section>
     `;
 
-    window.AfterApp.bindCommon();
-
     document
-      .querySelectorAll(".contact-faq-question")
+      .querySelectorAll(".visit-faq-question")
       .forEach(button => {
         button.onclick = () => {
-          const item = button.closest(
-            ".contact-faq-item"
-          );
-
-          const isOpen =
-            item.classList.contains("is-open");
+          const item = button.closest(".visit-faq-item");
+          const estaAbierto = item.classList.contains("is-open");
 
           document
-            .querySelectorAll(".contact-faq-item")
+            .querySelectorAll(".visit-faq-item")
             .forEach(other => {
               other.classList.remove("is-open");
 
               const otherButton =
-                other.querySelector(
-                  ".contact-faq-question"
-                );
+                other.querySelector(".visit-faq-question");
 
               otherButton.setAttribute(
                 "aria-expanded",
                 "false"
               );
 
-              otherButton.querySelector("b")
-                .textContent = "+";
+              otherButton.querySelector("b").textContent = "+";
             });
 
-          if (!isOpen) {
+          if (!estaAbierto) {
             item.classList.add("is-open");
 
             button.setAttribute(
@@ -434,8 +310,7 @@ window.AfterModules.contacto = (() => {
               "true"
             );
 
-            button.querySelector("b")
-              .textContent = "−";
+            button.querySelector("b").textContent = "−";
           }
         };
       });
