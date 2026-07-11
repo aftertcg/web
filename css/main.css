@@ -3080,3 +3080,46 @@ body::before {
 }
 
 /* AFTER-LAST-POLISH-END */
+
+
+.home-final-actions{
+display:flex;
+gap:8px;
+align-items:center;
+}
+
+.home-final-map,
+.home-final-whatsapp{
+
+width:46px;
+height:46px;
+
+display:grid;
+place-items:center;
+
+border-radius:15px;
+
+font-size:22px;
+text-decoration:none;
+
+background:linear-gradient(145deg,rgba(216,165,58,.18),rgba(17,20,27,.9));
+
+border:1px solid rgba(216,165,58,.25);
+
+transition:.15s;
+}
+
+.home-final-whatsapp{
+border-color:rgba(52,201,113,.45);
+background:linear-gradient(145deg,rgba(52,201,113,.22),rgba(17,20,27,.9));
+}
+
+.home-final-map:active,
+.home-final-whatsapp:active{
+transform:scale(.93);
+}
+
+.home-final-location-info{
+margin-left:2px;
+}
+

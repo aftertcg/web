@@ -163,7 +163,19 @@ window.AfterModules.inicio = (() => {
         <div class="home-final-location-bar">
 
           <div class="home-final-location-info">
-            <span class="home-final-location-icon">📍</span>
+            <div class="home-final-actions">
+
+<a
+class="home-final-map"
+href="https://maps.google.com/?q=Av.+Hipólito+Yrigoyen+3386,+CABA"
+target="_blank"
+rel="noopener"
+aria-label="Abrir ubicación"
+>
+🌍
+</a>
+
+</div>
 
             <div>
               <small>Encontranos en</small>
@@ -177,16 +189,6 @@ window.AfterModules.inicio = (() => {
               </span>
             </div>
           </div>
-
-          <a
-            class="home-final-whatsapp"
-            href="https://wa.me/${window.AFTER_CONFIG.whatsapp}?text=${encodeURIComponent(window.AFTER_CONFIG.mensajeGeneral)}"
-            target="_blank"
-            rel="noopener"
-            aria-label="Contactar a After TCG por WhatsApp"
-          >
-            💬
-          </a>
 
         </div>
 
