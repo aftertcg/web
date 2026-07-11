@@ -160,20 +160,33 @@ window.AfterModules.inicio = (() => {
     document.getElementById("app").innerHTML = `
       <section class="home-final">
 
-        <div class="home-final-top">
+        <div class="home-final-location-bar">
 
-          <span class="home-final-location">
-            📍 Almagro, CABA
-          </span>
-
-          <div class="home-final-status ${estado.clase}">
-            <span class="home-final-status-dot"></span>
+          <div class="home-final-location-info">
+            <span class="home-final-location-icon">📍</span>
 
             <div>
-              <strong>${estado.titulo}</strong>
-              <small>${estado.detalle}</small>
+              <small>Encontranos en</small>
+
+              <strong>
+                Av. Hipólito Yrigoyen 3386
+              </strong>
+
+              <span>
+                Almagro, CABA
+              </span>
             </div>
           </div>
+
+          <a
+            class="home-final-whatsapp"
+            href="https://wa.me/${window.AFTER_CONFIG.whatsapp}?text=${encodeURIComponent(window.AFTER_CONFIG.mensajeGeneral)}"
+            target="_blank"
+            rel="noopener"
+            aria-label="Contactar a After TCG por WhatsApp"
+          >
+            💬
+          </a>
 
         </div>
 
