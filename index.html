@@ -24,9 +24,31 @@
 </head>
 <body>
   <div class="app-shell">
-    <header class="topbar">
-      <img src="assets/branding/logo.png" alt="After TCG" class="logo">
-      <div class="topbar-status"><span class="status-dot"></span> Eventos con reserva</div>
+    <header class="topbar premium-topbar">
+
+      <button
+        class="topbar-brand"
+        data-route="inicio"
+        aria-label="Ir al inicio"
+      >
+        <span>AFTER</span>
+        <strong>TCG</strong>
+      </button>
+
+      <div class="topbar-live" id="topbar-live">
+        <span class="topbar-live-dot"></span>
+
+        <div>
+          <strong id="topbar-live-title">
+            Próxima actividad
+          </strong>
+
+          <small id="topbar-live-detail">
+            Almagro, CABA
+          </small>
+        </div>
+      </div>
+
     </header>
     <main id="app" class="app-main" aria-live="polite"></main>
     <nav class="bottom-nav premium-nav" aria-label="Navegación principal">
@@ -75,6 +97,7 @@
   <script src="js/modules/calendario.js"></script>
   <script src="js/modules/comunidad.js"></script>
   <script src="js/modules/contacto.js"></script>
+  <script src="js/core/ui.js"></script>
   <script src="js/core/app.js"></script>
 </body>
 </html>
