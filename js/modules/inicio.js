@@ -171,6 +171,28 @@ window.AfterModules.inicio = (() => {
             <span>Elegí una sección</span>
           </div>
 
+          <div class="home-v3-news-access">
+
+            <button
+              class="home-v3-news-card js-go"
+              data-route="noticias"
+            >
+              <span class="home-v3-news-icon">🗞️</span>
+
+              <div>
+                <div class="kicker">Lo último en After</div>
+                <strong>Noticias y novedades</strong>
+                <small>
+                  Preventas, productos, anuncios y nuevas actividades.
+              
+</small>
+              </div>
+
+              <b>›</b>
+            </button>
+
+          </div>
+
           <div class="home-v3-nav-grid">
 
             <button
@@ -194,8 +216,8 @@ window.AfterModules.inicio = (() => {
               <span class="home-v3-nav-icon">📅</span>
 
               <div>
-                <strong>Agenda</strong>
-                <small>Consultá las fechas</small>
+                <strong>Eventos</strong>
+                <small>Fechas, cupos y calendario</small>
               </div>
 
               <b>›</b>
