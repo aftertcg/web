@@ -1,192 +1,242 @@
-window.AfterModules=window.AfterModules||{};
-window.AfterModules.inicio=(()=>{
-  let slide=0;
-  let timer=null;
+window.AfterModules = window.AfterModules || {};
 
-  function cleanup(){
-    if(timer){
-      clearInterval(timer);
-      timer=null;
-    }
+window.AfterModules.inicio = (() => {
+  function cleanup() {
+    // Se conserva para que el router pueda limpiar el módulo.
   }
 
-  function render(){
-    cleanup();
-
-    const C=window.AfterComponents;
-    const U=window.AfterUtils;
-    const E=window.AFTER_EVENTOS;
-    const CFG=window.AFTER_CONFIG;
-
-    const destacados=E.filter(x=>x.destacado);
-    const up=U.upcoming();
-
-    if(slide>=destacados.length) slide=0;
-
-    const current=destacados[slide]||up[0]||E[0];
-
+  function getLocalStatus(nextEvent) {
+    const eventos = window.AFTER_EVENTOS;
     const ahora = new Date();
 
-    const eventoActivo = E.find(evento => {
-      const inicio = new Date(`${evento.fecha}T${evento.hora}:00`);
-      const apertura = new Date(inicio.getTime() - 30 * 60 * 1000);
-      const cierre = new Date(inicio.getTime() + 4 * 60 * 60 * 1000);
+    const eventoActivo = eventos.find(evento => {
+      const inicio = new Date(
+        `${evento.fecha}T${evento.hora}:00`
+      );
+
+      const apertura = new Date(
+        inicio.getTime() - 30 * 60 * 1000
+      );
+
+      const cierre = new Date(
+        inicio.getTime() + 4 * 60 * 60 * 1000
+      );
 
       return ahora >= apertura && ahora <= cierre;
     });
 
-    const estadoLocal = eventoActivo
-      ? {
-          clase: "abierto",
-          titulo: "Abierto ahora",
-          detalle: eventoActivo.titulo
-        }
-      : {
-          clase: "cerrado",
-          titulo: "Próxima actividad",
-          detalle: `${U.dateText(current.fecha)} · ${current.hora}`
-        };
+    if (eventoActivo) {
+      return {
+        abierto: true,
+        titulo: "Abierto ahora",
+        detalle: eventoActivo.titulo
+      };
+    }
 
-    document.getElementById("app").innerHTML=`<section>
+    return {
+      abierto: false,
+      titulo: "Próxima actividad",
+      detalle: nextEvent
+        ? `${window.AfterUtils.shortDate(nextEvent.fecha)} · ${nextEvent.hora}`
+        : "Próximamente"
+    };
+  }
 
-      <article class="welcome-card">
-        <div class="welcome-top">
-          <div class="kicker">📍 Almagro, CABA</div>
+  function render() {
+    const C = window.AFTER_CONFIG;
+    const U = window.AfterUtils;
+    const proximos = U.upcoming();
+    const next = proximos[0] || null;
+    const status = getLocalStatus(next);
 
-          <div class="local-status ${estadoLocal.clase}">
-            <span class="status-light"></span>
+    document.getElementById("app").innerHTML = `
+      <section class="home-v3">
 
-            <div>
-              <strong>${estadoLocal.titulo}</strong>
-              <small>${estadoLocal.detalle}</small>
+        <article class="home-v3-hero">
+
+          <img
+            src="assets/local/local-base.jpg"
+            alt="After TCG, espacio de juegos y eventos en Almagro"
+            class="home-v3-background"
+          >
+
+          <div class="home-v3-overlay"></div>
+          <div class="home-v3-glow"></div>
+
+          <div class="home-v3-top">
+
+            <span class="home-v3-location">
+              📍 Almagro, CABA
+            </span>
+
+            <div class="home-v3-status ${status.abierto ? "is-open" : "is-next"}">
+              <span class="home-v3-status-dot"></span>
+
+              <div>
+                <strong>${status.titulo}</strong>
+                <small>${status.detalle}</small>
+              </div>
             </div>
+
           </div>
-        </div>
 
-        <h1>Más que una tienda.<br>Un lugar para jugar.</h1>
+          <div class="home-v3-content">
 
-        <p>
-          After TCG es un espacio de eventos para jugar cartas,
-          participar en torneos, disfrutar Nintendo Switch,
-          intercambiar, comer algo y compartir el hobby.
-        </p>
+            <div class="kicker">
+              Bienvenido a After TCG
+            </div>
 
-        <div class="welcome-tags">
-          <span>🎴 TCG</span>
-          <span>🎮 Switch</span>
-          <span>🏆 Torneos</span>
-          <span>🌭 Panchitos</span>
-          <span>🥤 Bebidas</span>
-        </div>
+            <h1>
+              Jugá.<br>
+              Compartí.<br>
+              Viví el hobby.
+            </h1>
 
-        <button class="next-event-strip js-detail" data-event="${current.id}">
-          <small>PRÓXIMO EVENTO</small>
-          <strong>${current.titulo}</strong>
-          <span>${U.dateText(current.fecha)} · ${current.hora}</span>
-        </button>
-      </article>
+            <p>
+              Eventos TCG, Nintendo Switch, comunidad,
+              comida y buenos momentos.
+            </p>
 
-      <div class="section-head">
-        <h2>Reservá tu lugar</h2>
-      </div>
+            <div class="home-v3-tags">
+              <span>🎴 TCG</span>
+              <span>🎮 Switch</span>
+              <span>🏆 Torneos</span>
+              <span>🌭 Snacks</span>
+            </div>
 
-      <div id="hero">${C.hero(current)}</div>
-
-      <div class="slider-dots">
-        ${destacados.map((_,i)=>`
-          <button
-            class="slider-dot ${i===slide?"active":""}"
-            data-slide="${i}"
-            aria-label="Mostrar evento ${i+1}">
-          </button>
-        `).join("")}
-      </div>
-
-      <div class="section-head">
-        <h2>Esta semana</h2>
-        <button class="text-btn js-go" data-route="calendario">
-          Ver calendario
-        </button>
-      </div>
-
-      <div class="quick-grid">
-        ${up.slice(0,3).map(e=>`
-          <button class="quick-card js-detail" data-event="${e.id}">
-            <strong>${e.titulo}</strong>
-            <span>${U.dateText(e.fecha)} · ${e.hora}</span>
-          </button>
-        `).join("")}
-      </div>
-
-      <div class="section-head">
-        <h2>Qué encontrás</h2>
-      </div>
-
-      <div class="quick-grid">
-        <div class="quick-card">
-          <strong>🏆 Torneos TCG</strong>
-          <span>Competitivos y casuales.</span>
-        </div>
-
-        <div class="quick-card">
-          <strong>🎮 Nintendo Switch</strong>
-          <span>Multijugador y desafíos.</span>
-        </div>
-
-        <div class="quick-card">
-          <strong>🥤 Comida y bebidas</strong>
-          <span>Panchitos, Coca-Cola y snacks.</span>
-        </div>
-      </div>
-
-      <div class="section-head">
-        <h2>El espacio</h2>
-        <button class="text-btn js-go" data-route="contacto">
-          Cómo llegar
-        </button>
-      </div>
-
-      <article class="card">
-        <img
-          src="assets/local/local-base.jpg"
-          class="local-img"
-          alt="Imagen ilustrativa de After TCG">
-
-        <div class="contact-block">
-          <h3>Un lugar para venir a jugar</h3>
-
-          <p class="muted">
-            Abrimos martes, viernes y sábado, con una propuesta distinta
-            en cada fecha y cupos limitados.
-          </p>
-
-          <div class="chips">
-            ${CFG.consumos.map(x=>`<span class="chip">${x}</span>`).join("")}
           </div>
+
+          ${
+            next
+              ? `
+                <article class="home-v3-next-event">
+
+                  <button
+                    class="home-v3-next-main js-detail"
+                    data-event="${next.id}"
+                  >
+                    <div class="home-v3-next-date">
+                      <small>
+                        ${U.shortDate(next.fecha)}
+                      </small>
+
+                      <strong>${next.hora}</strong>
+                    </div>
+
+                    <div class="home-v3-next-info">
+                      <span>Próximo evento</span>
+                      <strong>${next.titulo}</strong>
+
+                      <small class="${U.availabilityClass(next)}">
+                        ${U.availability(next)}
+                      </small>
+                    </div>
+
+                    <div class="home-v3-next-arrow">
+                      ›
+                    </div>
+                  </button>
+
+                  <button
+                    class="home-v3-reserve js-reserve"
+                    data-event="${next.id}"
+                    ${U.remaining(next) === 0 ? "disabled" : ""}
+                  >
+                    ${
+                      U.remaining(next) === 0
+                        ? "Completo"
+                        : "Reservar lugar"
+                    }
+                  </button>
+
+                </article>
+              `
+              : ""
+          }
+
+        </article>
+
+
+        <div class="home-v3-explore">
+
+          <div class="home-v3-explore-heading">
+            <div>
+              <div class="kicker">
+                Explorá After
+              </div>
+
+              <h2>¿Qué querés ver?</h2>
+            </div>
+
+            <span>Elegí una sección</span>
+          </div>
+
+          <div class="home-v3-nav-grid">
+
+            <button
+              class="home-v3-nav-card home-v3-events js-go"
+              data-route="eventos"
+            >
+              <span class="home-v3-nav-icon">🎟️</span>
+
+              <div>
+                <strong>Eventos</strong>
+                <small>Reservá tu lugar</small>
+              </div>
+
+              <b>›</b>
+            </button>
+
+            <button
+              class="home-v3-nav-card home-v3-calendar js-go"
+              data-route="calendario"
+            >
+              <span class="home-v3-nav-icon">📅</span>
+
+              <div>
+                <strong>Agenda</strong>
+                <small>Consultá las fechas</small>
+              </div>
+
+              <b>›</b>
+            </button>
+
+            <button
+              class="home-v3-nav-card home-v3-community js-go"
+              data-route="comunidad"
+            >
+              <span class="home-v3-nav-icon">🏆</span>
+
+              <div>
+                <strong>Comunidad</strong>
+                <small>Rankings y momentos</small>
+              </div>
+
+              <b>›</b>
+            </button>
+
+            <button
+              class="home-v3-nav-card home-v3-visit js-go"
+              data-route="contacto"
+            >
+              <span class="home-v3-nav-icon">📍</span>
+
+              <div>
+                <strong>Visítanos</strong>
+                <small>Conocé el local</small>
+              </div>
+
+              <b>›</b>
+            </button>
+
+          </div>
+
         </div>
-      </article>
-    </section>`;
+
+      </section>
+    `;
 
     window.AfterApp.bindCommon();
-
-    document.querySelectorAll("[data-slide]").forEach(button=>{
-      button.onclick=()=>{
-        slide=Number(button.dataset.slide);
-        render();
-      };
-    });
-
-    if(destacados.length>1 && location.hash==="#inicio"){
-      timer=setInterval(()=>{
-        if(location.hash!=="#inicio"){
-          cleanup();
-          return;
-        }
-
-        slide=(slide+1)%destacados.length;
-        render();
-      },6500);
-    }
   }
 
   return {
