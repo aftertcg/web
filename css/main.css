@@ -3123,3 +3123,100 @@ transform:scale(.93);
 margin-left:2px;
 }
 
+
+
+
+/* AFTER-ACTION-ICONS-START */
+
+.home-final-map,
+.home-final-whatsapp {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 15px;
+  text-decoration: none;
+  transition:
+    transform .16s ease,
+    box-shadow .16s ease,
+    border-color .16s ease;
+}
+
+.home-final-map {
+  border: 1px solid rgba(216,165,58,.42);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(216,165,58,.21),
+      rgba(17,20,27,.92)
+    );
+  color: var(--gold2);
+  box-shadow:
+    0 8px 20px rgba(216,165,58,.11);
+}
+
+.home-final-whatsapp {
+  border: 1px solid rgba(52,201,113,.47);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(52,201,113,.23),
+      rgba(17,20,27,.92)
+    );
+  color: #67df98;
+  box-shadow:
+    0 8px 20px rgba(52,201,113,.12);
+}
+
+.home-final-action-icon {
+  width: 23px;
+  height: 23px;
+  display: block;
+  color: inherit;
+  filter: none;
+}
+
+.home-final-map:active,
+.home-final-whatsapp:active {
+  transform: scale(.92);
+}
+
+.home-final-map:hover {
+  border-color: rgba(216,165,58,.7);
+}
+
+.home-final-whatsapp:hover {
+  border-color: rgba(52,201,113,.72);
+}
+
+/* Giro suave del globo */
+.home-final-globe-icon {
+  animation:
+    afterGlobeSpin 5.5s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes afterGlobeSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pausa visual al tocarlo */
+.home-final-map:active
+.home-final-globe-icon {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-final-globe-icon {
+    animation: none;
+  }
+}
+
+/* AFTER-ACTION-ICONS-END */

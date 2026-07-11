@@ -172,7 +172,25 @@ target="_blank"
 rel="noopener"
 aria-label="Abrir ubicación"
 >
-🌍
+  <img
+    src="assets/icons/globe.svg"
+    alt=""
+    class="home-final-action-icon home-final-globe-icon"
+  >
+</a>
+
+<a
+  class="home-final-whatsapp"
+  href="https://wa.me/${window.AFTER_CONFIG.whatsapp}?text=${encodeURIComponent(window.AFTER_CONFIG.mensajeGeneral)}"
+  target="_blank"
+  rel="noopener"
+  aria-label="Contactar por WhatsApp"
+>
+  <img
+    src="assets/icons/whatsapp-premium.svg"
+    alt=""
+    class="home-final-action-icon"
+  >
 </a>
 
 </div>
