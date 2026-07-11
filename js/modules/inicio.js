@@ -162,39 +162,17 @@ window.AfterModules.inicio = (() => {
 
         <div class="home-final-location-bar">
 
+          <a
+            class="home-final-map"
+            href="${window.AFTER_CONFIG.mapsUrl}"
+            target="_blank"
+            rel="noopener"
+            aria-label="Abrir ubicación en Google Maps"
+          >
+            🌍
+          </a>
+
           <div class="home-final-location-info">
-            <div class="home-final-actions">
-
-<a
-class="home-final-map"
-href="https://maps.google.com/?q=Av.+Hipólito+Yrigoyen+3386,+CABA"
-target="_blank"
-rel="noopener"
-aria-label="Abrir ubicación"
->
-  <img
-    src="assets/icons/globe.svg"
-    alt=""
-    class="home-final-action-icon home-final-globe-icon"
-  >
-</a>
-
-<a
-  class="home-final-whatsapp"
-  href="https://wa.me/${window.AFTER_CONFIG.whatsapp}?text=${encodeURIComponent(window.AFTER_CONFIG.mensajeGeneral)}"
-  target="_blank"
-  rel="noopener"
-  aria-label="Contactar por WhatsApp"
->
-  <img
-    src="assets/icons/whatsapp-premium.svg"
-    alt=""
-    class="home-final-action-icon"
-  >
-</a>
-
-</div>
-
             <div>
               <small>Encontranos en</small>
 
@@ -207,6 +185,16 @@ aria-label="Abrir ubicación"
               </span>
             </div>
           </div>
+
+          <a
+            class="home-final-whatsapp"
+            href="https://wa.me/${window.AFTER_CONFIG.whatsapp}?text=${encodeURIComponent(window.AFTER_CONFIG.mensajeGeneral)}"
+            target="_blank"
+            rel="noopener"
+            aria-label="Contactar por WhatsApp"
+          >
+            💬
+          </a>
 
         </div>
 

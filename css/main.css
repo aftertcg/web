@@ -3220,3 +3220,58 @@ margin-left:2px;
 }
 
 /* AFTER-ACTION-ICONS-END */
+
+/* Ubicación final del Inicio */
+.home-final-location-bar {
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  gap: 10px;
+}
+
+.home-final-map,
+.home-final-whatsapp {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 15px;
+  font-size: 22px;
+  text-decoration: none;
+  transition: transform .15s ease;
+}
+
+.home-final-map {
+  border: 1px solid rgba(216,165,58,.42);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(216,165,58,.21),
+      rgba(17,20,27,.92)
+    );
+}
+
+.home-final-whatsapp {
+  border: 1px solid rgba(52,201,113,.47);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(52,201,113,.23),
+      rgba(17,20,27,.92)
+    );
+}
+
+.home-final-map:active,
+.home-final-whatsapp:active {
+  transform: scale(.93);
+}
+
+.home-final-location-info {
+  min-width: 0;
+}
+
+.home-final-location-info strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
