@@ -309,7 +309,7 @@ window.AfterModules.inicio = (() => {
                 class="home-featured-news"
                 data-featured-news="${noticiaDestacada.id}"
               >
-                <span class="home-featured-news-icon">🗞️</span>
+                <span class="home-featured-news-icon" aria-hidden="true">🗞️</span>
 
                 <div>
                   <small>${noticiaDestacada.tipo}</small>
@@ -414,7 +414,7 @@ window.AfterModules.inicio = (() => {
 
         <article class="home-final-manifesto">
 
-          <span>🎴</span>
+          <span>✨</span>
 
           <div>
             <strong>
