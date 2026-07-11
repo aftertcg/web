@@ -26,6 +26,37 @@ window.AfterModules.inicio=(()=>{
     const current=destacados[slide]||up[0]||E[0];
 
     document.getElementById("app").innerHTML=`<section>
+
+      <article class="welcome-card">
+        <div class="kicker">📍 Almagro, CABA</div>
+
+        <h1>Más que una tienda.<br>Un lugar para jugar.</h1>
+
+        <p>
+          After TCG es un espacio de eventos para jugar cartas,
+          participar en torneos, disfrutar Nintendo Switch,
+          intercambiar, comer algo y compartir el hobby.
+        </p>
+
+        <div class="welcome-tags">
+          <span>🎴 TCG</span>
+          <span>🎮 Switch</span>
+          <span>🏆 Torneos</span>
+          <span>🌭 Panchitos</span>
+          <span>🥤 Bebidas</span>
+        </div>
+
+        <button class="next-event-strip js-detail" data-event="${current.id}">
+          <small>PRÓXIMO EVENTO</small>
+          <strong>${current.titulo}</strong>
+          <span>${U.dateText(current.fecha)} · ${current.hora}</span>
+        </button>
+      </article>
+
+      <div class="section-head">
+        <h2>Reservá tu lugar</h2>
+      </div>
+
       <div id="hero">${C.hero(current)}</div>
 
       <div class="slider-dots">
