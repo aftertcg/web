@@ -2903,3 +2903,176 @@ body[data-section="contacto"] {
 }
 
 /* AFTER-AMBIENT-UI-END */
+
+
+
+/* AFTER-LAST-POLISH-START */
+
+/* Ubicación útil y acceso rápido */
+
+.home-final-location-bar {
+  display: grid;
+  grid-template-columns: 1fr 48px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 11px;
+  padding: 12px 13px;
+  border: 1px solid rgba(216,165,58,.24);
+  border-radius: 16px;
+  background:
+    linear-gradient(
+      120deg,
+      rgba(216,165,58,.09),
+      rgba(17,20,27,.94)
+    );
+  box-shadow:
+    0 10px 24px rgba(0,0,0,.18);
+}
+
+.home-final-location-info {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 0;
+}
+
+.home-final-location-icon {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: rgba(216,165,58,.13);
+  font-size: 20px;
+}
+
+.home-final-location-info small,
+.home-final-location-info strong,
+.home-final-location-info span {
+  display: block;
+}
+
+.home-final-location-info small {
+  color: var(--gold2);
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.home-final-location-info strong {
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.home-final-location-info span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.home-final-whatsapp {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(52,201,113,.42);
+  border-radius: 15px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(52,201,113,.22),
+      rgba(17,20,27,.85)
+    );
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
+  box-shadow:
+    0 8px 20px rgba(52,201,113,.12);
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease;
+}
+
+.home-final-whatsapp:active {
+  transform: scale(.94);
+  box-shadow:
+    0 4px 12px rgba(52,201,113,.1);
+}
+
+
+/* Partículas más visibles y rápidas */
+
+body::before {
+  background:
+    radial-gradient(
+      circle at 14% 18%,
+      rgba(216,165,58,.22) 0 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at 72% 35%,
+      rgba(255,255,255,.11) 0 1.3px,
+      transparent 2.3px
+    ),
+    radial-gradient(
+      circle at 42% 78%,
+      rgba(216,165,58,.16) 0 1.7px,
+      transparent 2.7px
+    ),
+    radial-gradient(
+      circle at 88% 68%,
+      rgba(216,165,58,.12) 0 1px,
+      transparent 2px
+    );
+  background-size:
+    110px 110px,
+    145px 145px,
+    180px 180px,
+    215px 215px;
+  animation:
+    afterParticlesFast 11s linear infinite;
+  opacity: .95;
+}
+
+@keyframes afterParticlesFast {
+  from {
+    transform:
+      translate3d(0, 0, 0);
+  }
+
+  to {
+    transform:
+      translate3d(0, -110px, 0);
+  }
+}
+
+@media (max-width: 360px) {
+  .home-final-location-bar {
+    grid-template-columns: 1fr 44px;
+    padding: 10px 11px;
+  }
+
+  .home-final-location-icon {
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
+  }
+
+  .home-final-whatsapp {
+    width: 44px;
+    height: 44px;
+  }
+
+  .home-final-location-info strong {
+    font-size: 12px;
+  }
+}
+
+/* AFTER-LAST-POLISH-END */
