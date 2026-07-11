@@ -25,10 +25,43 @@ window.AfterModules.inicio=(()=>{
 
     const current=destacados[slide]||up[0]||E[0];
 
+    const ahora = new Date();
+
+    const eventoActivo = E.find(evento => {
+      const inicio = new Date(`${evento.fecha}T${evento.hora}:00`);
+      const apertura = new Date(inicio.getTime() - 30 * 60 * 1000);
+      const cierre = new Date(inicio.getTime() + 4 * 60 * 60 * 1000);
+
+      return ahora >= apertura && ahora <= cierre;
+    });
+
+    const estadoLocal = eventoActivo
+      ? {
+          clase: "abierto",
+          titulo: "Abierto ahora",
+          detalle: eventoActivo.titulo
+        }
+      : {
+          clase: "cerrado",
+          titulo: "Próxima actividad",
+          detalle: `${U.dateText(current.fecha)} · ${current.hora}`
+        };
+
     document.getElementById("app").innerHTML=`<section>
 
       <article class="welcome-card">
-        <div class="kicker">📍 Almagro, CABA</div>
+        <div class="welcome-top">
+          <div class="kicker">📍 Almagro, CABA</div>
+
+          <div class="local-status ${estadoLocal.clase}">
+            <span class="status-light"></span>
+
+            <div>
+              <strong>${estadoLocal.titulo}</strong>
+              <small>${estadoLocal.detalle}</small>
+            </div>
+          </div>
+        </div>
 
         <h1>Más que una tienda.<br>Un lugar para jugar.</h1>
 
