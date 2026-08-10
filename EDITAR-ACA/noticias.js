@@ -1,59 +1,26 @@
 window.AFTER_NOTICIA_DESTACADA = "nueva-consola";
-
+//TIPOS: NUEVO, REINGRESO, PREVENTA, ANUNCIO, LOCAL
 window.AFTER_NOTICIAS = [
-  {
-    id: "nueva-consola",
-    tipo: "NUEVO",
-    fecha: "2026-08-10",
-    titulo: "Sumamos una nueva consola al espacio",
-    resumen: "Más opciones para las próximas noches de Switch.",
-    texto: "Incorporamos una nueva consola para mejorar las actividades multijugador. Muy pronto vamos a anunciar las primeras fechas y los juegos disponibles.",
-    imagen: "assets/eventos/noche-switch.jpg",
-    whatsapp: true,
-    activa: true
-  },
-  {
-    id: "reingreso-accesorios",
-    tipo: "REINGRESO",
-    fecha: "2026-08-08",
-    titulo: "Volvieron carpetas, fundas y accesorios",
-    resumen: "Consultá modelos y disponibilidad por WhatsApp.",
-    texto: "Recibimos una nueva tanda de carpetas, fundas y accesorios para proteger y organizar tu colección. El stock es limitado.",
-    imagen: "assets/eventos/apertura-intercambio.jpg",
-    whatsapp: true,
-    activa: true
-  },
-  {
-    id: "preventa-coleccion",
-    tipo: "PREVENTA",
-    fecha: "2026-08-05",
-    titulo: "Nueva preventa disponible",
-    resumen: "Reservas abiertas hasta agotar disponibilidad.",
-    texto: "Abrimos las reservas de una nueva colección. Consultanos por WhatsApp para conocer productos, precios y condiciones de reserva.",
-    imagen: "assets/eventos/torneo-standard.jpg",
-    whatsapp: true,
-    activa: true
-  },
-  {
-    id: "nuevos-juegos",
+    {
+    id: "torneo14-8",
     tipo: "ANUNCIO",
-    fecha: "2026-08-02",
-    titulo: "Estamos preparando nuevas actividades",
-    resumen: "Queremos sumar más juegos y propuestas a la agenda.",
-    texto: "Estamos evaluando nuevos juegos de cartas, torneos y actividades de consola. Las próximas incorporaciones se anunciarán en esta sección.",
-    imagen: "assets/eventos/encuentro-comunidad.jpg",
-    whatsapp: false,
+    fecha: "2026-08-14",
+    titulo: "Torneo pokemon tcg standar amistoso",
+    resumen: "Primero torneo de pokemon tcg",
+    texto: "Este viernes 14 de Agosto se llevara a cabo el primer torneo amistoso de After tcg, apurate a inscribirte.",
+    imagen: "assets/eventos/torneo14-8.jpg",
+    whatsapp: true,
     activa: true
   },
   {
-    id: "mejoras-local",
-    tipo: "LOCAL",
-    fecha: "2026-07-30",
-    titulo: "Seguimos mejorando After TCG",
-    resumen: "Nuevos detalles para disfrutar mejor cada fecha.",
-    texto: "Estamos terminando de preparar el espacio, las mesas y los distintos sectores para que cada actividad sea cómoda y tenga su propia identidad.",
-    imagen: "assets/local/local-base.jpg",
-    whatsapp: false,
+    id: "first-partner",
+    tipo: "NUEVO",
+    fecha: "2026-08-07",
+    titulo: "Ingreso first partner serie 3",
+    resumen: "Por fin llegaron las cajas de first partnet serie 3.",
+    texto: "Te esperamos en el local para venir a buscar tu caja de first partner serie 3. Tambien podes pedirnos numero en los sorteos para intentar llevarte la tuya.",
+    imagen: "assets/eventos/firstpartner.jpg",
+    whatsapp: true,
     activa: true
-  }
+  },
 ];
